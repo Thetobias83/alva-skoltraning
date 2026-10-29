@@ -1,3 +1,4 @@
+import {ROME_LESSONS} from './rome.js?v=20261029-rome1';
 // Original short explanations. Concept notes and examples are written for this site.
 const lesson=(id,subject,topics,title,intro,paragraphs,example,mistake,recall,answer,terms=[])=>({id,subject,topics,title,intro,paragraphs,example,mistake,recall,answer,terms});
 export const LESSONS=[
@@ -223,8 +224,11 @@ lesson('math-speed','Matematik',['Samband'],'Hastighet är sträcka delat med ti
 'Vad betyder medelhastigheten 12 km/h?',
 'Att sträckan delad med tiden motsvarar 12 kilometer per timme i genomsnitt.',[['Medelhastighet','Hela sträckan delad med hela tiden.']])
 );
+LESSONS.push(...ROME_LESSONS);
 export function lessonsFor(subject){return LESSONS.filter(l=>l.subject===subject);}
 export function lessonForQuestion(q){
+ if(q.s==='Historia'&&q.lessonId?.startsWith('rome-')){const specific=LESSONS.find(l=>l.id===q.lessonId);if(specific)return specific;}
+
  if(q.s==='Kemi'){
   if(/grundämne/i.test(q.q))return LESSONS.find(l=>l.id==='chem-elements');
   if(/vattenmolekyl|H₂O|vatten är|kemisk förening/i.test(q.q))return LESSONS.find(l=>l.id==='chem-molecules');

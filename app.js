@@ -1,8 +1,8 @@
-import {initCourses} from './courses.js?v=20261029-cpp1';
-import {initReferences} from './references.js?v=20261029-cpp1';
+import {initCourses} from './courses.js?v=20261029-rome1';
+import {initReferences} from './references.js?v=20261029-rome1';
 import {generateMath} from './math.js';
-import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js?v=20261029-cpp1';
-import {SUBJECTS,BANK,WORDS} from './data.js';
+import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js?v=20261029-rome1';
+import {SUBJECTS,BANK,WORDS} from './data.js?v=20261029-rome1';
 import {shuffle,dayKey,validateState,buildExam,answerCorrect,answerText,chooseRecommendation} from './core.js';
 const KEY="alva-school-v2";
 const today=()=>dayKey();
@@ -139,7 +139,7 @@ function setupExam(){
 }
 function startExam(){
  const s=document.querySelector("#examSubject").value,l=Number(document.querySelector("#examLevel").value);
- const p=buildExam(pool(s,l),10).map(normalize);
+ const candidates=pool(s,l);const p=buildExam(s==='Historia'&&document.querySelector('#examScope').value==='rome'?candidates.filter(q=>q.t==='Romartiden'):candidates,10).map(normalize);
  exam={active:true,qs:p,pos:0,answers:[]};document.querySelector("#examSummary").classList.add("hidden");document.querySelector("#examArea").classList.remove("hidden");showExamQ();
 }
 function showExamQ(){
@@ -277,7 +277,7 @@ function updateSmartStart(){
  if(x){el.textContent=`Rekommenderat nu: ${x.s} – ${x.t}. Du har ${x.p}% rätt på ${x.a} försök. Vi prioriterar det området.`;btn.textContent=`Träna ${x.t}`;btn.onclick=()=>{state.subject=x.s;preferredTopic=x.t;document.querySelector('#level').value='3';save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion();};}
  else{el.textContent='Börja med ett kort blandat pass. Efter några svar rekommenderar sidan vad du kan repetera.';btn.textContent='Starta dagens pass';btn.onclick=()=>{document.querySelector('[data-view="daily"]').click();if(!daily.active)startDaily();};}
 }
-load();initSelectors();initLearning({subject:state.subject,onSubjectChange:subject=>{state.subject=subject;preferredTopic=null;save();renderSubjects();newTrainQuestion();},onPractice:(subject,topic)=>{state.subject=subject;preferredTopic=topic;document.querySelector('#level').value='3';save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion();}});renderAll();
+load();initSelectors();initLearning({subject:state.subject,onSubjectChange:subject=>{state.subject=subject;preferredTopic=null;save();renderSubjects();newTrainQuestion();},onRomeExam:()=>{document.querySelector('#examSubject').value='Historia';document.querySelector('#examScope').disabled=false;document.querySelector('#examScope').value='rome';document.querySelector('#examLevel').value='3';document.querySelector('[data-view="exam"]').click();startExam();},onPractice:(subject,topic)=>{state.subject=subject;preferredTopic=topic;document.querySelector('#level').value='3';save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion();}});renderAll();
 updateSmartStart();
 
 document.querySelector('#themeBtn').onclick=()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('alva-smart-theme',next);}catch{}};
@@ -289,3 +289,6 @@ document.querySelector('#endDailyBtn').onclick=()=>{if(daily.active)finishDaily(
 
 
 initCourses();initReferences();
+
+document.querySelector('#examSubject').addEventListener('change',()=>{document.querySelector('#examScope').disabled=document.querySelector('#examSubject').value!=='Historia';document.querySelector('#examScope').value='all';});
+document.querySelector('#examScope').disabled=document.querySelector('#examSubject').value!=='Historia';

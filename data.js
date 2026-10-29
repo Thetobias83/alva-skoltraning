@@ -1,3 +1,4 @@
+import {ROME_QUESTIONS} from './rome.js?v=20261029-rome1';
 import {subjects as additionalSubjects} from './questions.js';
 import {extraContent} from './extra-content.js';
 const SUBJECTS={
@@ -96,3 +97,6 @@ for(const subject of additionalSubjects){
 }
 export {SUBJECTS,BANK,WORDS};
 BANK.push(...extraContent);
+
+SUBJECTS.Historia.topics.push("Romartiden");
+BANK.push(...ROME_QUESTIONS);

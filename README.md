@@ -53,6 +53,12 @@ Alla 16 skolämnen och alla tre kurserna har fördjupningslänkar, både i inneh
 
 ## Publicering
 
+### Romartiden under Historia
+
+Historia har en egen provförberedande undersektion med sex lektioner, nio hållpunkter i en utfällbar tidslinje och 24 frågor på tre nivåer. Den täcker överblick, republik och kejsardöme, expansion, samhällsgrupper/slaveri, religion och arv samt Västroms fall och källkritik. Varje fråga länkas tillbaka till sin relevanta förklaring via `lessonId`. Träna-knappen väljer bara ämnesområdet Romartiden. Övningsprov väljer tio olika Romfrågor och visar genomgång först efter inlämning; områdesväljaren finns även i Provläge. Resultaten använder befintlig historik under Historia / Romartiden.
+
+Materialet är en bred introduktion för årskurs 7, inte en verifierad återgivning av en viss lärares prov. Muntliga och skriftliga resonemang övas separat; flervalsprovet ger inte skolbetyg. Totalt 22 automatiska tester samt ett genomfört lokalt provflöde kontrollerar bland annat urvalet och kopplingen till lektionerna.
+
 GitHub Pages använder **Deploy from a branch → main → / (root)**. Alla egna resurser använder relativa sökvägar och fungerar under `/alva-skoltraning/`. `.nojekyll` finns i roten. Pusha ändringar till main för ny publicering.
 
 Webbplatsen kan även publiceras på annan statisk webbhosting genom att använda rotens HTML-, CSS- och JavaScript-filer. Ingen backend, API-nyckel, betald API eller PWA-installation behövs. Sites kunde inte användas i publiceringssessionen eftersom verktyget svarade att det inte var tillgängligt.

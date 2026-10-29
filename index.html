@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#245647">
 <meta name="description" content="Interaktiv skolträning för årskurs 7 med adaptiv repetition, glosor och provläge.">
 <title>Alvas skolträning · Smart webb</title>
-<link rel="stylesheet" href="./style.css?v=20261029-cpp1">
+<link rel="stylesheet" href="./style.css?v=20261029-rome1">
 </head>
 <body>
 <div class="wrap">
@@ -50,7 +50,7 @@
 </aside>
 
 <main>
-<section id="view-learn" class="view active"><div class="panel hero"><h2>Förstå först, öva sedan</h2><p>Korta förklaringar, vanliga missförstånd och exempel. Välj ett ämne och läs i din takt.</p></div><div class="panel card controls"><label for="learnSubject">Ämne</label><select id="learnSubject"></select><label for="lessonSelect">Förklaring</label><select id="lessonSelect"></select></div><div id="lessonBody"></div></section><section id="view-train" class="view">
+<section id="view-learn" class="view active"><div class="panel hero"><h2>Förstå först, öva sedan</h2><p>Korta förklaringar, vanliga missförstånd och exempel. Välj ett ämne och läs i din takt.</p></div><div class="panel card controls"><label for="learnSubject">Ämne</label><select id="learnSubject"></select><label for="lessonSelect">Förklaring</label><select id="lessonSelect"></select></div><div id="romeSection" hidden></div><div id="lessonBody"></div></section><section id="view-train" class="view">
   <div class="panel hero">
     <div class="hero-row">
       <div><h2 id="subjectTitle"></h2><p id="subjectDesc"></p></div>
@@ -104,6 +104,7 @@
   <div class="panel card">
     <div class="controls">
       <label class="small" for="examSubject">Ämne</label><select id="examSubject"></select>
+      <label class="small" for="examScope">Område</label><select id="examScope" disabled><option value="all">Hela ämnet</option><option value="rome">Romartiden (Historia)</option></select>
       <label class="small" for="examLevel">Nivå</label><select id="examLevel"><option value="1">Grund</option><option value="2" selected>Normal</option><option value="3">Utmaning</option></select>
       <button class="primary" id="startExamBtn">Starta prov</button>
     </div>
@@ -227,7 +228,7 @@
 <footer>Innehållet är byggt som kompletterande träning för årskurs 7. Exakta läroböcker/kapitel behöver läggas in när skolans aktuella material är känt.</footer>
 </div>
 
-<script type="module" src="./app.js?v=20261029-cpp1"></script>
+<script type="module" src="./app.js?v=20261029-rome1"></script>
 </body>
 </html>
 
