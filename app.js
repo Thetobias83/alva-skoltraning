@@ -1,5 +1,5 @@
 import {generateMath} from './math.js';
-import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js';
+import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js?v=20261029-learn2';
 import {SUBJECTS,BANK,WORDS} from './data.js';
 import {shuffle,dayKey,validateState,buildExam,answerCorrect,answerText,chooseRecommendation} from './core.js';
 const KEY="alva-school-v2";
@@ -284,3 +284,4 @@ document.querySelector('#flashcard').onkeydown=e=>{if(e.key==='Enter'||e.key==='
 document.querySelector('#generatorBtn').onclick=()=>{state.subject='Matematik';preferredTopic=null;renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion(true);};
 document.querySelector('#timedStartBtn').onclick=()=>startDaily(true);
 document.querySelector('#endDailyBtn').onclick=()=>{if(daily.active)finishDaily();};
+

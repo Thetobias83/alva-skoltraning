@@ -1,4 +1,4 @@
-import {LESSONS,MOLECULES,lessonsFor,lessonForQuestion} from './lessons.js';
+import {LESSONS,MOLECULES,lessonsFor,lessonForQuestion} from './lessons.js?v=20261029-learn2';
 const html=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let activeLesson=null,onPractice=()=>{};
 function openView(){document.querySelector('[data-view="learn"]').click();}
@@ -45,3 +45,4 @@ function renderModel(key){
  const m=MOLECULES[key],count=new Set(m.atoms).size;
  document.querySelector('#modelResult').innerHTML=`<div class="atom-row" aria-label="${html(m.formula)}: ${m.atoms.join(', ')}">${m.atoms.map(a=>`<span class="atom atom-${a}">${a}</span>`).join('<span class="bond" aria-hidden="true">—</span>')}</div><p><strong>${html(m.formula)}: ${m.atoms.length} atomer · ${count} ${count===1?'sorts':'sorters'} atomer · ${html(m.kind)}</strong></p><p>${html(m.explanation)}</p>`;
 }
+
