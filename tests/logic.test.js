@@ -1,0 +1,9 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {subjects} from '../questions.js';
+import {isCorrect,record,shuffle,streak} from '../logic.js';
+test('all questions have unique ids, usable answers, hints and explanations',()=>{const ids=new Set();assert.equal(subjects.length,12);for(const s of subjects){assert.ok(s.questions.length>=5);for(const q of s.questions){assert.ok(!ids.has(q.id));ids.add(q.id);assert.ok(q.hint&&q.explanation);const answer=q.type==='choice'?q.answer:q.type==='text'?q.answers[0]:q.pairs.map(p=>p[1]);assert.ok(isCorrect(q,answer));if(q.type==='choice')assert.ok(!isCorrect(q,(q.answer+1)%q.options.length));if(q.type==='text')assert.ok(!isCorrect(q,'felaktigt svar'));if(q.type==='match')assert.ok(!isCorrect(q,q.pairs.map(()=>'')));}}});
+test('text tolerates case, whitespace and Unicode composition',()=>{const q=subjects[0].questions[1];assert.ok(isCorrect(q,'  BÖCKER  '));assert.ok(isCorrect(q,'böcker'));});
+test('attempts persist without mutating previous state',()=>{const before={attempts:0,correct:0,questions:{},days:[]};let after=record(before,{id:'ma1'},true,new Date(2026,9,29));after=record(after,{id:'ma1'},false,new Date(2026,9,29));assert.equal(before.attempts,0);assert.equal(after.attempts,2);assert.equal(after.correct,1);assert.deepEqual(after.questions.ma1,{attempts:2,correct:1});assert.equal(after.days.length,1);});
+test('streak counts consecutive days and allows an unfinished current day',()=>{assert.equal(streak(['2026-10-27','2026-10-28'],new Date(2026,9,29)),2);assert.equal(streak(['2026-10-27'],new Date(2026,9,29)),0);assert.equal(streak(['2026-10-28','2026-10-29'],new Date(2026,9,29)),2);});
+test('shuffle preserves every question without mutating input',()=>{const source=[1,2,3,4];assert.deepEqual(shuffle(source).sort(),source);assert.deepEqual(source,[1,2,3,4]);});

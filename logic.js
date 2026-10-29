@@ -1,0 +1,6 @@
+export const normalize=s=>String(s).normalize('NFC').trim().toLocaleLowerCase('sv').replace(/\s+/g,' ').replace(/\.$/,'');
+export function isCorrect(q,value){if(q.type==='text')return q.answers.some(a=>normalize(a)===normalize(value));if(q.type==='match')return q.pairs.every((p,i)=>value[i]===p[1]);return value===q.answer;}
+export const shuffle=items=>{const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+export function dayKey(date=new Date()){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;}
+export function streak(days,now=new Date()){const d=new Date(now);d.setHours(12,0,0,0);if(!days.includes(dayKey(d)))d.setDate(d.getDate()-1);let count=0;while(days.includes(dayKey(d))){count++;d.setDate(d.getDate()-1);}return count;}
+export function record(state,q,correct,date=new Date()){const next=structuredClone(state);next.attempts++;next.correct+=Number(correct);next.questions[q.id]={attempts:(next.questions[q.id]?.attempts||0)+1,correct:(next.questions[q.id]?.correct||0)+Number(correct)};const day=dayKey(date);if(!next.days.includes(day))next.days.push(day);return next;}
