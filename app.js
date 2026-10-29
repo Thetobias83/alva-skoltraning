@@ -1,4 +1,5 @@
 import {generateMath} from './math.js';
+import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js';
 import {SUBJECTS,BANK,WORDS} from './data.js';
 import {shuffle,dayKey,validateState,buildExam,answerCorrect,answerText,chooseRecommendation} from './core.js';
 const KEY="alva-school-v2";
@@ -55,7 +56,7 @@ function renderSubjects(){
  Object.keys(SUBJECTS).forEach(s=>{
   const b=document.createElement("button");b.className="subject"+(state.subject===s?" active":"");b.type="button";
   b.innerHTML=`<span>${s}</span><small>${pct(state.subjectStats[s])}%</small>`;
-  b.addEventListener("click",()=>{state.subject=s;preferredTopic=null;save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion()});
+  b.addEventListener("click",()=>{state.subject=s;preferredTopic=null;save();renderSubjects();if(document.querySelector('#view-learn').classList.contains('active'))showLessonFor({s,t:'',q:''});else{document.querySelector('[data-view="train"]').click();newTrainQuestion();}});
   box.appendChild(b);
  });
 }
@@ -65,6 +66,7 @@ function newTrainQuestion(generated=false){
  document.querySelector("#subjectDesc").textContent=SUBJECTS[current.s].desc;
  document.querySelector("#topicTag").textContent=current.t;document.querySelector("#levelTag").textContent=levelName(current.l);
  document.querySelector("#question").textContent=current.q;renderAnswers("#answers",current,trainAnswer);
+ renderQuestionIntro(current);
  document.querySelector("#feedback").className="feedback";document.querySelector("#feedback").textContent="";
  document.querySelector("#nextBtn").disabled=true;document.querySelector("#hintText").textContent="";renderStats();
 }
@@ -89,6 +91,7 @@ function markAnswers(selector,q,ok,button){
 function trainAnswer(value,b){
  if(locked)return;locked=true;const ok=answerCorrect(current,value);markAnswers('#answers',current,ok,b);record(current,ok);
  const f=document.querySelector('#feedback');f.className='feedback '+(ok?'good':'bad');f.textContent=(ok?'Rätt. ':'Inte riktigt. Rätt svar: '+answerText(current)+'. ')+current.e;
+ if(!ok){const read=document.createElement('button');read.type='button';read.className='ghost';read.textContent='Läs en enkel förklaring →';read.onclick=()=>showLessonFor(current);f.append(document.createElement('br'),read);}
  document.querySelector('#nextBtn').disabled=false;
 }
 function renderStats(){
@@ -272,7 +275,7 @@ function updateSmartStart(){
  if(x){el.textContent=`Rekommenderat nu: ${x.s} – ${x.t}. Du har ${x.p}% rätt på ${x.a} försök. Vi prioriterar det området.`;btn.textContent=`Träna ${x.t}`;btn.onclick=()=>{state.subject=x.s;preferredTopic=x.t;document.querySelector('#level').value='3';save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion();};}
  else{el.textContent='Börja med ett kort blandat pass. Efter några svar rekommenderar sidan vad du kan repetera.';btn.textContent='Starta dagens pass';btn.onclick=()=>{document.querySelector('[data-view="daily"]').click();if(!daily.active)startDaily();};}
 }
-load();initSelectors();renderAll();
+load();initSelectors();initLearning({subject:state.subject,onPractice:(subject,topic)=>{state.subject=subject;preferredTopic=topic;document.querySelector('#level').value='3';save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion();}});renderAll();
 updateSmartStart();
 
 document.querySelector('#themeBtn').onclick=()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('alva-smart-theme',next);}catch{}};

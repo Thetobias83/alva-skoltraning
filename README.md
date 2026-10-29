@@ -2,6 +2,10 @@
 
 Publicerad på https://thetobias83.github.io/alva-skoltraning/.
 
+Uppdatering: **Lär dig** innehåller 28 korta förklaringar med exempel, ordlistor, vanliga missförstånd och egen återberättelse. Sju kemitexter förklarar bland annat grundämnen, atomer, molekyler, föreningar och blandningar. En interaktiv partikelmodell jämför H₂, O₂, H₂O och CO₂. Uppläsning beror på enhetens tillgängliga röster. Ingen text i återberättelsefältet skickas eller sparas.
+
+`lessons.js` innehåller texterna, `learning.js` hanterar läsvyn och kontext vid övningar. Se [RESEARCH.md](RESEARCH.md) för granskade projekt, inspirationskällor och förslag till nästa steg.
+
 16 ämnen, 139 fasta frågor och genererade matteuppgifter. Tre nivåer, adaptiv repetition, Smart start, dagens pass, tiominutersträning, provläge, gloskort med uttal, egna glosor, elev-/föräldraöversikt, skolanteckningar, export/import och frågespecifika ChatGPT-handledarprompter. Ljust och mörkt tema.
 
 Återställd från originalets synliga byggloggar i ChatGPT och förbättrad i Codex. Kompletterande övningsmaterial, inte en komplett kurs eller betygsbedömning. Ingen specifik läroboksserie är verifierad. Antalet frågor varierar mellan ämnen; prov har upp till tio unika frågor beroende på ämne och nivå.
