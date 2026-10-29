@@ -41,17 +41,17 @@ Export/import flyttar v2-progression manuellt mellan enheter eller webbplatsadre
 
 Den första webbversionens data finns kvar under dess separata nyckel `alva-progress-v1`, men läses inte av v2 och kan inte direkt importeras som v2-data. Ingen äldre lagringsnyckel raderas vid uppdateringen.
 
-## Publicering
-
 ## Kurser och fördjupning
 
-Två nybörjarkurser med sex steg vardera: 3D-printning med filament och AI-verktyg. Varje steg har egen text, exempel, praktisk tankeövning och en kunskapsfråga med återkoppling. En lagerverkstad visar den förenklade relationen mellan höjd och lagerhöjd. En promptverkstad skapar redigerbar text lokalt utan AI-anrop. Utskrift sker med vuxens hjälp enligt aktuell maskinmanual; sidan styr ingen skrivare.
+Tre nybörjarkurser med sex steg vardera: C++, 3D-printning med filament och AI-verktyg. Varje steg har egen text, exempel, praktisk tankeövning och en kunskapsfråga med återkoppling. En lagerverkstad visar den förenklade relationen mellan höjd och lagerhöjd. En promptverkstad skapar redigerbar text lokalt utan AI-anrop. Utskrift sker med vuxens hjälp enligt aktuell maskinmanual; sidan styr ingen skrivare.
+
+C++-kursen introducerar main, utskrift, variabler, villkor, loopar och funktioner. Sex kompletta C++17-exempel kan kopieras och har utfällbar förväntad utskrift. Koden visas som escaped text och körs inte i webbläsaren. Vidare läsning länkar till LearnCpp och cppreference. Ingen C++-kompilator fanns tillgänglig i utvecklingsmiljön, så exemplen är manuellt granskade men har inte kompilerats där.
 
 Kurskryss sparas separat i `alva-courses-v1` och har egen export/import under Kurser. Import ersätter kurskryssen. Skolämnenas export och nollställning omfattar inte dessa kryss. Inga egna övningstexter sparas. 19 automatiska tester omfattar även kursimport, lagerberäkning och fördjupningslänkarnas ämnestäckning.
 
-Alla 16 skolämnen och båda kurserna har fördjupningslänkar, både i innehållet och under Läs vidare. `references.js` innehåller avsändare, språk och kort vägledning. Källorganisationerna har inte granskat studiesidan. UR-länkarna går till ämneskataloger där eleven behöver välja nivå och program.
+Alla 16 skolämnen och alla tre kurserna har fördjupningslänkar, både i innehållet och under Läs vidare. `references.js` innehåller avsändare, språk och kort vägledning. Källorganisationerna har inte granskat studiesidan. UR-länkarna går till ämneskataloger där eleven behöver välja nivå och program.
 
-### Hosting
+## Publicering
 
 GitHub Pages använder **Deploy from a branch → main → / (root)**. Alla egna resurser använder relativa sökvägar och fungerar under `/alva-skoltraning/`. `.nojekyll` finns i roten. Pusha ändringar till main för ny publicering.
 

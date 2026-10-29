@@ -118,3 +118,4 @@ html[data-theme=dark] .primary,html[data-theme=dark] .tab.active{color:#14231f}h
 .course-steps{margin:20px 0;gap:8px;flex-wrap:wrap}.course-steps [aria-pressed="true"]{outline:2px solid var(--accent,#087f8c)}
 .course-quiz{border:0;padding:12px 0;margin:12px 0}.course-quiz legend{font-weight:700}.course-quiz label{display:flex;gap:8px;padding:12px 4px;align-items:center}.course-quiz input,.course-check input{width:auto}
 .course-check{display:block;margin:16px 0}#layerWorkshop,#promptWorkshop{margin-top:20px}#promptTopic{display:block;width:100%;margin:12px 0}#coursePrompt{width:100%;display:block;margin:12px 0}#courseCards{margin:20px 0}
+.code-example{margin:20px 0}.code-example pre{background:var(--soft);color:var(--text);padding:18px;border:1px solid var(--line);border-radius:12px;overflow-x:auto;max-width:100%;font-size:.95rem;line-height:1.65;white-space:pre}.code-example code{font-family:Consolas,monospace}

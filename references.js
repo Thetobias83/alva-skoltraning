@@ -1,5 +1,7 @@
 const resource=(subject,provider,title,url,description,language='Svenska')=>({subject,provider,title,url,description,language});
 export const REFERENCES=[
+ resource('C++','LearnCpp','Lär dig modern C++ från början','https://www.learncpp.com/','Börja i kapitel 0 om verktyg och ditt första program. Fortsätt med kapitel 1 om grunderna. Gratis material utan krav på tidigare programmering.','Engelska'),
+ resource('C++','cppreference','C++ – funktionen main','https://en.cppreference.com/cpp/language/main_function','Detaljerad uppslagsreferens om programmets startpunkt. Läs kursens enkla exempel först.','Engelska · avancerad'),
  resource('Matematik','Mattecentrum','Matteboken – årskurs 7','https://www.matteboken.se/lektioner/hogstadiet/skolar-7','Läs en genomgång och prova uppgifter om till exempel bråk, procent och algebra.'),
  resource('Engelska','British Council','LearnEnglish Teens','https://learnenglishteens.britishcouncil.org/','Träna läsning, hörförståelse, grammatik och ord. Börja på en nivå som känns lagom.','Engelska'),
  resource('Biologi','Naturhistoriska riksmuseet','Fakta om evolution','https://www.nrm.se/skola/lektionsmaterial/fakta-om-evolution','Följ livets utveckling genom tidsperioder och fossil.'),

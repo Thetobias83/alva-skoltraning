@@ -1,5 +1,5 @@
-import {lessonReferences} from './references.js?v=20261029-courses1';
-import {LESSONS,MOLECULES,lessonsFor,lessonForQuestion} from './lessons.js?v=20261029-courses1';
+import {lessonReferences} from './references.js?v=20261029-cpp1';
+import {LESSONS,MOLECULES,lessonsFor,lessonForQuestion} from './lessons.js?v=20261029-cpp1';
 const html=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let activeLesson=null,onPractice=()=>{};
 function openView(){document.querySelector('[data-view="learn"]').click();}

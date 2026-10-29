@@ -1,7 +1,7 @@
-import {initCourses} from './courses.js?v=20261029-courses1';
-import {initReferences} from './references.js?v=20261029-courses1';
+import {initCourses} from './courses.js?v=20261029-cpp1';
+import {initReferences} from './references.js?v=20261029-cpp1';
 import {generateMath} from './math.js';
-import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js?v=20261029-courses1';
+import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js?v=20261029-cpp1';
 import {SUBJECTS,BANK,WORDS} from './data.js';
 import {shuffle,dayKey,validateState,buildExam,answerCorrect,answerText,chooseRecommendation} from './core.js';
 const KEY="alva-school-v2";
