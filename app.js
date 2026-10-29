@@ -275,7 +275,7 @@ function updateSmartStart(){
  if(x){el.textContent=`Rekommenderat nu: ${x.s} – ${x.t}. Du har ${x.p}% rätt på ${x.a} försök. Vi prioriterar det området.`;btn.textContent=`Träna ${x.t}`;btn.onclick=()=>{state.subject=x.s;preferredTopic=x.t;document.querySelector('#level').value='3';save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion();};}
  else{el.textContent='Börja med ett kort blandat pass. Efter några svar rekommenderar sidan vad du kan repetera.';btn.textContent='Starta dagens pass';btn.onclick=()=>{document.querySelector('[data-view="daily"]').click();if(!daily.active)startDaily();};}
 }
-load();initSelectors();initLearning({subject:state.subject,onPractice:(subject,topic)=>{state.subject=subject;preferredTopic=topic;document.querySelector('#level').value='3';save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion();}});renderAll();
+load();initSelectors();initLearning({subject:state.subject,onSubjectChange:subject=>{state.subject=subject;preferredTopic=null;save();renderSubjects();newTrainQuestion();},onPractice:(subject,topic)=>{state.subject=subject;preferredTopic=topic;document.querySelector('#level').value='3';save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion();}});renderAll();
 updateSmartStart();
 
 document.querySelector('#themeBtn').onclick=()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('alva-smart-theme',next);}catch{}};

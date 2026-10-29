@@ -7,7 +7,7 @@ export function initLearning(options){
  const subjectSelect=document.querySelector('#learnSubject');
  for(const subject of [...new Set(LESSONS.map(l=>l.subject))]){const option=document.createElement('option');option.value=subject;option.textContent=subject;subjectSelect.append(option);}
  subjectSelect.value=options.subject||'Kemi';
- subjectSelect.onchange=()=>chooseSubject(subjectSelect.value);
+ subjectSelect.onchange=()=>{options.onSubjectChange?.(subjectSelect.value);chooseSubject(subjectSelect.value);};
  document.querySelector('#lessonSelect').onchange=e=>renderLesson(LESSONS.find(l=>l.id===e.target.value));
  chooseSubject(subjectSelect.value);
 }

@@ -31,7 +31,7 @@ node --test tests/*.test.js
 
 Öppna http://localhost:4174/. JavaScript-moduler behöver HTTP-server vid lokal körning.
 
-Tolv tester verifierar frågebank, facit, textnormalisering, statistik, importschema, provurval, rekommendationer och matematikgeneratorns samtliga grenar. Glosornas uttal beror på enhetens tillgängliga talsyntesröster. Fysisk iPhone och full tiominutersnedräkning har inte testats.
+Femton tester verifierar frågebank, facit, textnormalisering, statistik, importschema, provurval, rekommendationer och matematikgeneratorns samtliga grenar. Glosornas uttal beror på enhetens tillgängliga talsyntesröster. Fysisk iPhone och full tiominutersnedräkning har inte testats.
 
 ## Lokal progression
 
@@ -46,3 +46,4 @@ Den första webbversionens data finns kvar under dess separata nyckel `alva-prog
 GitHub Pages använder **Deploy from a branch → main → / (root)**. Alla egna resurser använder relativa sökvägar och fungerar under `/alva-skoltraning/`. `.nojekyll` finns i roten. Pusha ändringar till main för ny publicering.
 
 Webbplatsen kan även publiceras på annan statisk webbhosting genom att använda rotens HTML-, CSS- och JavaScript-filer. Ingen backend, API-nyckel, betald API eller PWA-installation behövs. Sites kunde inte användas i publiceringssessionen eftersom verktyget svarade att det inte var tillgängligt.
+
