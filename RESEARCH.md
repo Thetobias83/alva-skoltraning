@@ -31,6 +31,16 @@ Undersökt 2026-10-29. Idéerna nedan är vår bedömning av vad som passar den 
 
 ## Sakgranskning av kemins grundbegrepp
 
+## Fördjupningslänkar och nya kurser (29 oktober 2026)
+
+Utvalda länkar finns i `references.js`. Sökning och läsning av originalkällor omfattade Mattecentrum, British Council, Naturhistoriska riksmuseet, Historiska museet, SMHI, Sveriges riksdag och UR:s ämneskataloger. UR:s kataloger är breda och instruktionen är att välja Grundskola 7–9 samt aktuellt område; alla program är inte nybörjarmaterial.
+
+3D-kursen är självständigt formulerad för filamentutskrift. Vidare läsning: [Autodesks Tinkercad-övningar](https://www.tinkercad.com/learn/designs) och [Prusa Researchs introduktion](https://www.prusa3d.com/page/basics-of-3d-printing-with-josef-prusa_464/). Profil, temperatur, ventilation och handhavande ska kontrolleras mot den faktiska maskinens och materialets anvisningar. Ingen universell temperatur eller färdig G-code ges.
+
+AI-kursens vidare läsning: [Internetstiftelsens källkritiska AI-sökning](https://internetkunskap.se/artiklar/grundkurs-i-ai/sa-soker-du-kallkritiskt-med-ai/) och [OpenAI:s officiella promptingguide](https://learn.chatgpt.com/docs/prompting). Kursen övar tydliga instruktioner, eget försök, källkontroll, integritet och redovisning av hjälp. Den lovar inte faktakorrekthet hos AI och kräver ingen specifik tjänst eller prenumeration.
+
+### Kemibegrepp
+
 Grundämnesbegreppet kontrollerades mot [IUPAC Gold Book: chemical element](https://goldbook.iupac.org/terms/view/C01022). Elevernas förklaring är förenklad och självständigt formulerad: samma antal protoner innebär samma grundämne. Molekyl och kemisk förening skiljs tydligt åt. O₂ består av en sorts atomer; H₂O innehåller två olika grundämnen. Texten nämner att alla föreningar inte består av separata molekyler, exempelvis koksalt.
 
 Partikelmodellen är symbolisk: färger, storlekar, vinklar och avstånd visar inte en exakt fysikalisk bild. Den visar färdiga exempel och kan inte användas för att avgöra vilka nya molekyler som faktiskt kan bildas.

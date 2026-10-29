@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#245647">
 <meta name="description" content="Interaktiv skolträning för årskurs 7 med adaptiv repetition, glosor och provläge.">
 <title>Alvas skolträning · Smart webb</title>
-<link rel="stylesheet" href="./style.css?v=20261029-learn2">
+<link rel="stylesheet" href="./style.css?v=20261029-courses1">
 </head>
 <body>
 <div class="wrap">
@@ -38,6 +38,8 @@
   <button class="tab" data-view="words">Glosor</button>
   <button class="tab" data-view="progress">Översikt</button>
   <button class="tab" data-view="ai">AI-hjälp</button>
+  <button class="tab" data-view="courses">Kurser</button>
+  <button class="tab" data-view="resources">Läs vidare</button>
   <button class="tab" data-view="settings">Inställningar</button>
 </nav>
 
@@ -185,6 +187,19 @@
   </div>
 </section>
 
+<section id="view-courses" class="view">
+ <div class="panel hero"><div><h2>Lär dig något nytt</h2><p>Två kurser med enkla förklaringar, egna försök och frågor med återkoppling. Gå i din egen takt och återkom till vilket steg du vill.</p></div></div>
+ <div id="courseCards" class="grid2"></div>
+ <div id="courseSteps" class="controls course-steps" aria-label="Kursens steg"></div>
+ <div id="courseLesson"></div>
+ <section id="layerWorkshop" class="panel card"><h3>Lagerverkstad</h3><p>Se hur lagerhöjden påverkar antalet lager i en förenklad modell. Verkstaden beräknar inte utskriftstid eller materialåtgång.</p><div class="controls"><label>Modellens höjd (mm)<input id="modelHeight" type="number" min="1" max="1000" value="20" step="1"></label><label>Lagerhöjd (mm)<select id="layerHeight"><option value="0.1">0,1</option><option value="0.2" selected>0,2</option><option value="0.3">0,3</option></select></label></div><p id="layerResult" role="status"></p></section>
+ <section id="promptWorkshop" class="panel card" hidden><h3>Promptverkstad</h3><p>Skapa en fråga som hjälper dig att lära dig. Inget skickas till en AI här. Du kan också diskutera frågan med en vuxen utan att använda en tjänst.</p><label for="promptTopic">Vad vill du förstå? Använd inga privata uppgifter.</label><input id="promptTopic" maxlength="120" placeholder="t.ex. hur procent fungerar"><button class="secondary" id="makeCoursePrompt">Skapa övningsprompt</button><label for="coursePrompt">Din prompt – går att redigera</label><textarea id="coursePrompt" rows="6"></textarea><button class="ghost" id="copyCoursePrompt">Kopiera prompten</button><p id="promptCopyStatus" role="status"></p></section>
+ <details class="panel card"><summary>Spara och flytta kursframsteg</summary><p>Kryssen sparas i den här webbläsaren, separat från skolämnenas statistik. De visar vilka steg du själv markerat klara, inte ett betyg eller intyg. Exportera innan du byter enhet eller rensar webbläsaren. Import ersätter kurskryssen med filens innehåll.</p><div class="controls"><button class="ghost" id="exportCourses">Exportera kursframsteg</button><label>Importera kursframsteg<input id="importCourses" type="file" accept="application/json"></label></div><p id="courseDataStatus" role="status"></p></details>
+</section>
+<section id="view-resources" class="view">
+ <div class="panel hero"><div><h2>Läs vidare</h2><p>Nyfiken på mer? Här finns utvalda länkar till etablerade utbildningsorganisationer, museer, myndigheter och verktygens egna guider. Samma länkar finns vid lektionerna och kurserna.</p></div></div>
+ <div class="panel card"><label for="referenceSubject">Välj ämne eller kurs</label><select id="referenceSubject"></select><div id="referenceList"></div><p class="small">Länkarna öppnas i en ny flik. Språk och inriktning anges vid varje länk. UR har material för flera åldrar: välj filtret Grundskola 7–9. Externa tjänsters utbud och åtkomst kan ändras. Urvalet gjordes 29 oktober 2026. Organisationerna har inte granskat eller godkänt den här studiesidan.</p></div>
+</section>
 <section id="view-settings" class="view">
   <div class="panel hero"><div><h2>Inställningar</h2><p>Här kan ni koppla träningen till vad klassen arbetar med just nu och flytta statistik mellan enheter.</p></div></div>
   <div class="grid2">
@@ -212,7 +227,7 @@
 <footer>Innehållet är byggt som kompletterande träning för årskurs 7. Exakta läroböcker/kapitel behöver läggas in när skolans aktuella material är känt.</footer>
 </div>
 
-<script type="module" src="./app.js?v=20261029-learn2"></script>
+<script type="module" src="./app.js?v=20261029-courses1"></script>
 </body>
 </html>
 

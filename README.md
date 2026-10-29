@@ -43,6 +43,16 @@ Den första webbversionens data finns kvar under dess separata nyckel `alva-prog
 
 ## Publicering
 
+## Kurser och fördjupning
+
+Två nybörjarkurser med sex steg vardera: 3D-printning med filament och AI-verktyg. Varje steg har egen text, exempel, praktisk tankeövning och en kunskapsfråga med återkoppling. En lagerverkstad visar den förenklade relationen mellan höjd och lagerhöjd. En promptverkstad skapar redigerbar text lokalt utan AI-anrop. Utskrift sker med vuxens hjälp enligt aktuell maskinmanual; sidan styr ingen skrivare.
+
+Kurskryss sparas separat i `alva-courses-v1` och har egen export/import under Kurser. Import ersätter kurskryssen. Skolämnenas export och nollställning omfattar inte dessa kryss. Inga egna övningstexter sparas. 19 automatiska tester omfattar även kursimport, lagerberäkning och fördjupningslänkarnas ämnestäckning.
+
+Alla 16 skolämnen och båda kurserna har fördjupningslänkar, både i innehållet och under Läs vidare. `references.js` innehåller avsändare, språk och kort vägledning. Källorganisationerna har inte granskat studiesidan. UR-länkarna går till ämneskataloger där eleven behöver välja nivå och program.
+
+### Hosting
+
 GitHub Pages använder **Deploy from a branch → main → / (root)**. Alla egna resurser använder relativa sökvägar och fungerar under `/alva-skoltraning/`. `.nojekyll` finns i roten. Pusha ändringar till main för ny publicering.
 
 Webbplatsen kan även publiceras på annan statisk webbhosting genom att använda rotens HTML-, CSS- och JavaScript-filer. Ingen backend, API-nyckel, betald API eller PWA-installation behövs. Sites kunde inte användas i publiceringssessionen eftersom verktyget svarade att det inte var tillgängligt.
