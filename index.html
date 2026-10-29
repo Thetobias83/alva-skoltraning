@@ -1,5 +1,219 @@
 <!doctype html>
-<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#224d43"><meta name="description" content="Alvas skolträning – öva i din egen takt i årskurs 7."><title>Alvas skolträning</title><link rel="stylesheet" href="./style.css"><script type="module" src="./app.js"></script></head><body>
-<header><a class="brand" href="./">a<span>Alvas skolträning<small>NYFIKENHET TAR DIG VIDARE</small></span></a><button id="theme" aria-label="Byt mellan ljust och mörkt tema">◐ <span>Tema</span></button></header>
-<main id="main"></main><footer>Årskurs 7 · Din takt. Dina framsteg.<span>Sparas bara i den här webbläsaren.</span></footer>
-</body></html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#245647">
+<meta name="description" content="Interaktiv skolträning för årskurs 7 med adaptiv repetition, glosor och provläge.">
+<title>Alvas skolträning · Smart webb</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">
+    <h1>Alvas skolträning</h1>
+    <p>Årskurs 7 · träning som anpassar sig efter vad som behöver repeteras</p>
+  </div>
+  <button class="ghost" id="themeBtn" aria-label="Byt ljust eller mörkt tema">◐ Tema</button>
+</header>
+
+<section class="panel hero" style="margin-bottom:14px">
+  <div class="hero-row">
+    <div>
+      <h2 style="margin:0 0 5px">Smart start</h2>
+      <p id="smartStartText">Börja med ett kort pass så anpassar sidan nästa träning efter resultaten.</p>
+    </div>
+    <div class="controls" style="margin:0">
+      <button class="primary" id="smartStartBtn" type="button">Starta rekommenderat pass</button>
+    </div>
+  </div>
+</section>
+
+<p id="storageNotice" class="small" role="status"></p>
+<nav class="tabs" aria-label="Huvudmeny">
+  <button class="tab active" data-view="train">Träna</button>
+  <button class="tab" data-view="daily">Dagens pass</button>
+  <button class="tab" data-view="exam">Prov</button>
+  <button class="tab" data-view="words">Glosor</button>
+  <button class="tab" data-view="progress">Översikt</button>
+  <button class="tab" data-view="ai">AI-hjälp</button>
+  <button class="tab" data-view="settings">Inställningar</button>
+</nav>
+
+<div class="layout">
+<aside class="panel sidebar">
+  <h2>ÄMNEN</h2>
+  <div id="subjects" class="subjects"></div>
+</aside>
+
+<main>
+<section id="view-train" class="view active">
+  <div class="panel hero">
+    <div class="hero-row">
+      <div><h2 id="subjectTitle"></h2><p id="subjectDesc"></p></div>
+      <div class="stats">
+        <div class="stat"><strong id="score">0</strong><span>poäng</span></div>
+        <div class="stat"><strong id="streak">0</strong><span>i följd</span></div>
+        <div class="stat"><strong id="todayCount">0</strong><span>idag</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel card">
+    <div class="controls">
+      <label class="small" for="level">Svårighet</label>
+      <select id="level">
+        <option value="1">Grund</option>
+        <option value="2" selected>Normal</option>
+        <option value="3">Utmaning</option>
+      </select>
+      <button type="button" class="ghost" id="skipBtn">Byt fråga</button><button type="button" class="secondary" id="generatorBtn">Nya matteuppgifter</button>
+    </div>
+    <div class="tags"><span id="topicTag" class="tag"></span><span id="levelTag" class="tag"></span><span id="adaptiveTag" class="tag">Adaptiv repetition</span></div>
+    <div id="question" class="question"></div>
+    <div id="answers" class="answers"></div>
+    <button class="ghost" id="hintBtn" style="margin-top:12px">Visa ledtråd</button><p id="hintText" class="small" role="status"></p>
+    <div id="feedback" class="feedback" aria-live="polite"></div>
+    <div class="actions">
+      <button type="button" class="secondary" id="helpCurrentBtn">Fråga ChatGPT om denna</button>
+      <button type="button" class="primary" id="nextBtn" disabled>Nästa fråga</button>
+    </div>
+  </div>
+</section>
+
+<section id="view-daily" class="view">
+  <div class="panel hero"><div class="hero-row">
+    <div><h2>Dagens pass</h2><p>10 frågor från flera ämnen. Systemet väljer oftare områden där träffsäkerheten är låg.</p></div>
+    <div class="stats"><div class="stat"><strong id="dailyPos">0/10</strong><span>frågor</span></div><div class="stat"><strong id="dailyCorrect">0</strong><span>rätt</span></div></div>
+  </div></div>
+  <div class="panel card">
+    <div class="controls"><button class="secondary" id="timedStartBtn">Starta 10 minuters träning</button><button class="ghost" id="endDailyBtn">Avsluta pass</button><span id="dailyClock" role="timer" aria-label="Återstående tid"></span></div><div class="tags"><span id="dailySubjectTag" class="tag"></span><span id="dailyTopicTag" class="tag"></span></div>
+    <div id="dailyQuestion" class="question"></div>
+    <div id="dailyAnswers" class="answers"></div>
+    <div id="dailyFeedback" class="feedback" aria-live="polite"></div>
+    <div class="actions"><button class="secondary" id="dailyHelpBtn">Fråga ChatGPT</button><button class="primary" id="dailyNextBtn">Starta pass</button></div>
+    <div class="progress"><div id="dailyBar"></div></div>
+  </div>
+</section>
+
+<section id="view-exam" class="view">
+  <div class="panel hero"><div><h2>Provläge</h2><p>Upp till 10 olika frågor utan direkt facit. Antalet beror på ämne och nivå. Genomgång visas efter inlämning.</p></div></div>
+  <div class="panel card">
+    <div class="controls">
+      <label class="small" for="examSubject">Ämne</label><select id="examSubject"></select>
+      <label class="small" for="examLevel">Nivå</label><select id="examLevel"><option value="1">Grund</option><option value="2" selected>Normal</option><option value="3">Utmaning</option></select>
+      <button class="primary" id="startExamBtn">Starta prov</button>
+    </div>
+    <div id="examArea" class="hidden">
+      <div class="tags"><span id="examMeta" class="tag"></span></div>
+      <div id="examQuestion" class="question"></div>
+      <div id="examAnswers" class="answers"></div>
+      <div class="actions"><span class="small" id="examCounter"></span><button class="primary" id="examNextBtn" disabled>Nästa</button></div>
+    </div>
+    <div id="examSummary" class="hidden"></div>
+  </div>
+</section>
+
+<section id="view-words" class="view">
+  <div class="panel hero"><div><h2>Glosor & språk</h2><p>Tyska och engelska med kort, uttal och egen gloslista. Tyska är förvalt. Uppläsning beror på vilka röster som finns i enheten.</p></div></div>
+  <div class="grid2">
+    <div class="panel card">
+      <div class="controls">
+        <select id="wordLang" aria-label="Språk för glosor"><option value="de">Tyska</option><option value="en">Engelska</option></select>
+        <button class="ghost" id="speakBtn">🔊 Läs upp</button>
+      </div>
+      <div class="flashcard" id="flashcard" role="button" tabindex="0" aria-label="Vänd gloskort"><div><div id="wordFront" class="big"></div><div id="wordHint" class="sub">Tryck på kortet för att vända</div></div></div>
+      <div class="actions"><button class="ghost" id="wordHard">Svårt</button><button class="secondary" id="wordFlip">Vänd</button><button class="primary" id="wordEasy">Kan</button></div>
+    </div>
+    <div class="panel card">
+      <div class="section-title"><h3>Egna glosor</h3><span>sparas på enheten</span></div>
+      <div class="custom-grid">
+        <input id="customFront" aria-label="Tyskt eller engelskt ord" maxlength="200" type="text" placeholder="Tyska/engelska ordet">
+        <input id="customBack" aria-label="Svensk betydelse" maxlength="200" type="text" placeholder="Svensk betydelse">
+        <button class="secondary" id="addWordBtn">Lägg till</button>
+      </div>
+      <div id="customWords" class="list" style="margin-top:12px"></div>
+    </div>
+  </div>
+</section>
+
+<section id="view-progress" class="view">
+  <div class="panel hero"><div><h2>Översikt</h2><p>Visar vad som fungerar och vad som bör tränas mer. Statistiken ligger bara i den här webbläsaren.</p></div></div>
+  <div class="grid3" style="margin-bottom:14px">
+    <div class="metric"><strong id="totalAnswered">0</strong><span>besvarade frågor</span></div>
+    <div class="metric"><strong id="overallPct">0%</strong><span>träffsäkerhet</span></div>
+    <div class="metric"><strong id="activeDays">0</strong><span>aktiva dagar</span></div>
+  </div>
+  <div class="grid2">
+    <div class="panel card">
+      <div class="section-title"><h3>Per ämne</h3><span>träffsäkerhet</span></div>
+      <div id="subjectBars" class="bars"></div>
+    </div>
+    <div class="panel card">
+      <div class="section-title"><h3>Rekommenderad repetition</h3><span>svagaste områden först</span></div>
+      <div id="recommendations" class="list"></div>
+    </div>
+  </div>
+  <div class="panel card" style="margin-top:14px">
+    <div class="section-title"><h3>Senaste 7 dagarna</h3><span>minst en fråga = aktiv dag</span></div>
+    <div id="week" class="week"></div>
+  </div>
+</section>
+
+<section id="view-ai" class="view">
+  <div class="panel hero"><div><h2>AI-hjälp med ChatGPT Free</h2><p>Sidan skapar en färdig handledarprompt. Alva klistrar in den i sitt vanliga ChatGPT-konto och får hjälp utan att facit ska ges direkt.</p></div></div>
+  <div class="grid2">
+    <div class="panel card ai-box">
+      <div class="section-title"><h3>Studieprompt</h3><span>anpassad för åk 7</span></div>
+      <label class="small" for="aiSubject">Ämne</label>
+      <select id="aiSubject"></select>
+      <label class="small" for="aiProblem">Vad behöver du hjälp med?</label>
+      <textarea id="aiProblem" placeholder="Exempel: Jag förstår inte hur man löser 3x + 5 = 20."></textarea>
+      <button class="secondary" id="makePromptBtn">Skapa handledarprompt</button>
+    </div>
+    <div class="panel card ai-box">
+      <div class="section-title"><h3>Färdig prompt</h3><span>kopiera till ChatGPT</span></div>
+      <textarea id="aiPrompt" aria-label="Handledarprompt" readonly></textarea>
+      <div class="actions">
+        <button class="ghost" id="copyPromptBtn">Kopiera</button>
+        <a class="primary" href="https://chatgpt.com/" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;align-items:center">Öppna ChatGPT</a>
+      </div>
+      <div id="copyStatus" class="small" aria-live="polite"></div>
+      <div class="callout">AI ska användas som handledare: be om ledtrådar, kontrollfrågor och förklaringar. Kontrollera viktiga fakta mot lärobok eller lärarens material.</div>
+    </div>
+  </div>
+</section>
+
+<section id="view-settings" class="view">
+  <div class="panel hero"><div><h2>Inställningar</h2><p>Här kan ni koppla träningen till vad klassen arbetar med just nu och flytta statistik mellan enheter.</p></div></div>
+  <div class="grid2">
+    <div class="panel card">
+      <div class="section-title"><h3>Aktuellt i skolan</h3><span>frivilligt</span></div>
+      <label class="small" for="currentMath">Matematik – kapitel/område</label>
+      <input id="currentMath" maxlength="5000" type="text" style="width:100%" placeholder="t.ex. Algebra kapitel 3">
+      <label class="small" for="currentGerman" style="display:block;margin-top:9px">Tyska – kapitel/område</label>
+      <input id="currentGerman" maxlength="5000" type="text" style="width:100%" placeholder="t.ex. Kapitel 4: Meine Familie">
+      <label class="small" for="currentOther" style="display:block;margin-top:9px">Övrigt</label>
+      <textarea id="currentOther" maxlength="5000" placeholder="Prov, läxor eller områden att träna extra på"></textarea>
+      <button class="primary" id="saveFocusBtn">Spara</button><p id="focusStatus" role="status" class="small"></p>
+    </div>
+    <div class="panel card">
+      <div class="section-title"><h3>Data</h3><span>ingen inloggning</span></div>
+      <p class="small">Progress sparas lokalt. Exportera en fil om statistiken ska flyttas till en annan dator eller telefon.</p>
+      <div class="controls"><button class="secondary" id="exportBtn">Exportera progress</button><label class="ghost" style="display:inline-flex;align-items:center;cursor:pointer">Importera<input id="importFile" type="file" accept="application/json" aria-label="Importera sparad progression"></label></div>
+      <button class="danger" id="resetBtn">Nollställ all statistik</button>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+
+<footer>Innehållet är byggt som kompletterande träning för årskurs 7. Exakta läroböcker/kapitel behöver läggas in när skolans aktuella material är känt.</footer>
+</div>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
+
+

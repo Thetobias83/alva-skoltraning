@@ -1,35 +1,283 @@
-import {subjects} from './questions.js';
-import {isCorrect,shuffle,streak,record} from './logic.js';
-const main=document.querySelector('#main'),key='alva-progress-v1';
-const empty=()=>({attempts:0,correct:0,questions:{},days:[]});
-let state=empty(),storageOK=true,session=null,timer=null;
-try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&Number.isInteger(saved.attempts)&&saved.attempts>=0&&Number.isInteger(saved.correct)&&saved.correct>=0&&saved.correct<=saved.attempts&&saved.questions&&typeof saved.questions==='object'&&Array.isArray(saved.days))state=saved;}catch{storageOK=false;}
-const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const pct=(a,b)=>b?Math.round(a/b*100):0;
-function save(){try{localStorage.setItem(key,JSON.stringify(state));storageOK=true;}catch{storageOK=false;}}
-function setTheme(theme){document.body.classList.toggle('dark',theme==='dark');document.querySelector('#theme').setAttribute('aria-pressed',String(theme==='dark'));try{localStorage.setItem('alva-theme',theme);}catch{}}
-let initial=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';try{initial=localStorage.getItem('alva-theme')||initial;}catch{}setTheme(initial);
-document.querySelector('#theme').onclick=()=>setTheme(document.body.classList.contains('dark')?'light':'dark');
-function focusTitle(){main.querySelector('h1')?.setAttribute('tabindex','-1');main.querySelector('h1')?.focus();}
-function home(){clearInterval(timer);session=null;const trained=subjects.filter(s=>s.questions.some(q=>state.questions[q.id])).length;
-main.innerHTML=`<section class="hero"><div><span class="eyebrow">DIN PLATS FÖR ÅRSKURS 7</span><h1>Hej Alva.<br>Vad vill du lära dig idag?</h1><p>Lite i taget gör skillnad. Välj ett ämne, prova en tanke och upptäck vad du redan kan.</p></div><div class="practice"><span class="orb" aria-hidden="true">✧</span><span class="eyebrow">EN LITEN STUND, ETT STORT STEG</span><h2>10 minuter.<br>Lite av varje.</h2><p>Blanda ämnen och utmana din nyfikenhet.</p><button id="mix">Starta blandad träning ↗</button></div></section>
-<section class="stats" aria-label="Dina framsteg"><div class="stat"><strong>${state.attempts}</strong><span>besvarade frågor</span></div><div class="stat"><strong>${pct(state.correct,state.attempts)} %</strong><span>rätt totalt</span></div><div class="stat"><strong>${trained} / 12</strong><span>ämnen tränade</span></div><div class="stat"><strong>${streak(state.days)}</strong><span>dagar i följd</span></div></section>
-<div class="section-head"><h2>Följ din nyfikenhet</h2><p>12 ämnen · välj var du vill börja</p></div><section class="grid" aria-label="Ämnen">${subjects.map(s=>{const done=s.questions.filter(q=>state.questions[q.id]).length;return `<button class="subject" data-subject="${s.id}"><span class="icon" aria-hidden="true">${s.icon}</span><h3>${s.name}</h3><p>${s.description}</p><span class="meta"><span>${done} av ${s.questions.length} provade</span><span aria-hidden="true">↗</span></span><progress aria-label="${s.name}: provade frågor" value="${done}" max="${s.questions.length}"></progress></button>`;}).join('')}</section>
-<aside class="help"><div><span class="eyebrow">HJÄLP ATT TÄNKA VIDARE</span><h3>En ledtråd till, med ChatGPT</h3><p>Kopiera en handledarprompt och klistra in i ChatGPT. Den ber om förklaringar och små steg. Fungerar med ett gratiskonto.</p></div><button id="tutor">Kopiera handledarprompt ↗</button></aside><p id="copy-status" role="status"></p><p class="notice">Framsteg visar träning här, inte betyg. Frågorna är ett fristående övningsmaterial och följer ingen särskild lärobok.</p>${!storageOK?'<p role="status">Webbläsaren kunde inte läsa eller spara progression. Träningen fungerar, men dina resultat kan försvinna när sidan stängs.</p>':''}`;
-document.querySelector('#mix').onclick=()=>start();main.querySelectorAll('[data-subject]').forEach(b=>b.onclick=()=>start(b.dataset.subject));document.querySelector('#tutor').onclick=copyPrompt;
+import {generateMath} from './math.js';
+import {SUBJECTS,BANK,WORDS} from './data.js';
+import {shuffle,dayKey,validateState,buildExam,answerCorrect,answerText,chooseRecommendation} from './core.js';
+const KEY="alva-school-v2";
+const today=()=>dayKey();
+let state={
+ subject:"Matematik",score:0,streak:0,history:[],topicStats:{},subjectStats:{},days:{},
+ customWords:[],wordStats:{},focus:{math:"",german:"",other:""}
+};
+let preferredTopic=null;
+let current=null,locked=false,daily={active:false,pos:0,correct:0,q:null},exam={active:false,qs:[],pos:0,answers:[]};
+let wordState={lang:"de",index:0,flipped:false};
+let dailyTimer=null;
+
+function load(){
+ try{const raw=JSON.parse(localStorage.getItem(KEY)||'null');if(raw)state=validateState(raw,Object.keys(SUBJECTS));}
+ catch{notice('Sparade data kunde inte läsas. Du kan fortsätta träna och importera en säkerhetskopia.');}
+ try{document.documentElement.dataset.theme=localStorage.getItem('alva-smart-theme')|| (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch{}
 }
-function start(id){clearInterval(timer);const pool=(id?subjects.filter(s=>s.id===id):subjects).flatMap(s=>s.questions.map(q=>({...q,subject:s.name})));session={title:id?subjects.find(s=>s.id===id).name:'Blandad träning',pool,queue:shuffle(pool),index:0,answered:0,correct:0,checked:false,value:null,end:id?null:Date.now()+600000};showQuestion();if(!id)timer=setInterval(()=>{if(!session)return;if(Date.now()>=session.end)finish(true);else updateClock();},1000);}
-function updateClock(){const el=document.querySelector('#clock');if(el&&session?.end){const progress=document.querySelector(".quiz progress");if(progress)progress.value=Math.min(600000,600000-(session.end-Date.now()));const sec=Math.max(0,Math.ceil((session.end-Date.now())/1000));el.textContent=`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')} kvar`;}}
-function showQuestion(){const q=session.queue[session.index];session.checked=false;session.value=q.type==='match'?q.pairs.map(()=>''):null;session.q=q;
-main.innerHTML=`<div class="quiz"><div class="quiz-top"><button id="leave">← Avsluta pass</button><span id="clock">${session.end?'10:00 kvar':`${session.index+1} av ${session.queue.length}`}</span></div><progress aria-label="Passets framsteg" value="${session.end?600000-(session.end-Date.now()):session.index}" max="${session.end?600000:session.queue.length}"></progress><div class="question"><span class="eyebrow">${q.subject} · ${q.type==='match'?'Para ihop':q.type==='text'?'Skriv svaret':'Välj ett svar'}</span><h1>${escape(q.prompt)}</h1><form id="answer-form"><div class="options" id="options"></div><div class="actions"><button class="primary" id="check" type="submit">Kontrollera svar</button><button id="hint-button" type="button">Visa ledtråd</button></div></form><p id="hint" role="status"></p><div id="feedback" aria-live="polite"></div><div id="next"></div></div><p id="session-stats">${session.answered} besvarade · ${pct(session.correct,session.answered)} % rätt i passet</p>${!storageOK?'<p role="status">Resultaten kan inte sparas i webbläsaren just nu.</p>':''}</div>`;
-const options=document.querySelector('#options');
-if(q.type==='choice'){q.options.forEach((option,i)=>{const b=document.createElement('button');b.type='button';b.textContent=option;b.setAttribute('aria-pressed','false');b.onclick=()=>{session.value=i;options.querySelectorAll('button').forEach(el=>{el.classList.toggle('selected',el===b);el.setAttribute('aria-pressed',String(el===b));});};options.append(b);});}
-else if(q.type==='text'){options.innerHTML='<label for="written">Ditt svar</label><input id="written" autocomplete="off" maxlength="200" placeholder="Skriv här…">';document.querySelector('#written').oninput=e=>session.value=e.target.value;}
-else{const values=shuffle(q.pairs.map(p=>p[1]));q.pairs.forEach((pair,i)=>{const label=document.createElement('label');label.textContent=pair[0];const select=document.createElement('select');select.innerHTML='<option value="">Välj betydelse…</option>'+values.map(v=>`<option value="${escape(v)}">${escape(v)}</option>`).join('');select.onchange=()=>session.value[i]=select.value;label.append(select);options.append(label);});}
-document.querySelector('#hint-button').onclick=()=>document.querySelector('#hint').textContent=q.hint;document.querySelector('#answer-form').onsubmit=e=>{e.preventDefault();check();};document.querySelector('#leave').onclick=()=>finish(false);updateClock();focusTitle();}
-function check(){if(!session||session.checked)return;if(session.end&&Date.now()>=session.end){finish(true);return;}const q=session.q,value=session.value;if(value===null||(q.type==='text'&&!String(value).trim())||(q.type==='match'&&value.some(v=>!v))){document.querySelector('#hint').textContent='Svara först, eller använd ledtråden för att komma vidare.';return;}session.checked=true;const correct=isCorrect(q,value);session.answered++;session.correct+=Number(correct);state=record(state,q,correct);save();document.querySelector("#session-stats").textContent=`${session.answered} besvarade · ${pct(session.correct,session.answered)} % rätt i passet`;document.querySelectorAll('#answer-form button,#answer-form input,#answer-form select').forEach(el=>el.disabled=true);const answer=q.type==='choice'?q.options[q.answer]:q.type==='text'?q.answers[0]:q.pairs.map(p=>p.join(' → ')).join('; ');document.querySelector('#feedback').innerHTML=`<div class="feedback ${correct?'':'error'}"><strong>${correct?'Rätt! Bra tänkt.':'Inte riktigt – här får du hjälp.'}</strong>${correct?'':`<p>Rätt svar: ${escape(answer)}</p>`}<p>${escape(q.explanation)}</p>${!storageOK?'<p>Resultatet kunde inte sparas.</p>':''}</div>`;document.querySelector('#next').innerHTML='<div class="actions"><button class="primary" id="next-button">Nästa →</button></div>';document.querySelector('#next-button').onclick=()=>{session.index++;if(session.index>=session.queue.length){if(session.end){session.queue=shuffle(session.pool);session.index=0;}else{finish(false);return;}}showQuestion();};document.querySelector('#next-button').focus();}
-function finish(expired){clearInterval(timer);const s=session;if(!s)return;session=null;main.innerHTML=`<div class="quiz"><span class="eyebrow">${expired?'TIDEN ÄR UTE':'PASSET ÄR AVSLUTAT'}</span><h1>En stund klokare.</h1><p>Du tränade ${s.title.toLocaleLowerCase('sv')} och besvarade ${s.answered} frågor. Varje försök är ett steg framåt.</p><section class="stats"><div class="stat"><strong>${s.answered}</strong><span>besvarade</span></div><div class="stat"><strong>${s.correct}</strong><span>rätt</span></div><div class="stat"><strong>${pct(s.correct,s.answered)} %</strong><span>rätt i passet</span></div></section><p>${storageOK?'Dina svar har sparats i den här webbläsaren.':'Dina resultat kunde inte sparas i webbläsaren.'}</p><button class="primary" id="home">Till mina ämnen →</button></div>`;document.querySelector('#home').onclick=()=>{home();focusTitle();};focusTitle();}
-async function copyPrompt(){const prompt='Du är min tålmodiga studiehandledare. Jag heter Alva och går i årskurs 7 i Sverige. Hjälp mig förstå uppgiften jag klistrar in efter detta. Svara på svenska, men använd målspråket när vi tränar engelska eller tyska. Fråga först vad jag har provat och vad som känns svårt. Ge en liten ledtråd i taget och låt mig försöka mellan stegen. Förklara med tydliga exempel på min nivå. Ge inte bara facit eller en färdig inlämning. Hjälp mig kontrollera mitt resonemang och avsluta med en liknande övning. Om fakta är osäkra, säg det. Min uppgift är: ';const status=document.querySelector('#copy-status');try{await navigator.clipboard.writeText(prompt);status.innerHTML='Prompten är kopierad. Klistra in den i <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT ↗</a> och lägg till din uppgift.';}catch{status.textContent='Markera och kopiera prompten här:';const area=document.createElement('textarea');area.value=prompt;area.style.width='100%';area.rows=7;area.setAttribute('aria-label','Handledarprompt att kopiera');status.append(area);area.select();}}
-home();
+function save(){
+ try{localStorage.setItem(KEY,JSON.stringify(state));return true;}
+ catch{notice('Webbläsaren kunde inte spara. Exportera dina resultat innan du stänger sidan.');return false;}
+}
+function notice(message){document.querySelector('#storageNotice').textContent=message;}
 
+function statKey(s,t){return s+"||"+t}
+function ensureStats(q){
+ if(!state.subjectStats[q.s])state.subjectStats[q.s]={a:0,c:0};
+ const k=statKey(q.s,q.t); if(!state.topicStats[k])state.topicStats[k]={a:0,c:0};
+}
+function pct(x){return !x||!x.a?0:Math.round(x.c/x.a*100)}
+function record(q,ok,mode="train"){
+ ensureStats(q);state.subjectStats[q.s].a++;state.topicStats[statKey(q.s,q.t)].a++;
+ if(ok){state.subjectStats[q.s].c++;state.topicStats[statKey(q.s,q.t)].c++;state.score+=10;state.streak++}else state.streak=0;
+ state.days[today()]=(state.days[today()]||0)+1;
+ state.history.push({d:Date.now(),s:q.s,t:q.t,ok,mode});if(state.history.length>600)state.history=state.history.slice(-600);
+ save();renderStats();renderSubjects();
+}
+function mathGenerated(level=2){return generateMath(level);}
+function normalize(q){return q.correct!==undefined?{...q,c:q.a.indexOf(q.correct)}:q;}
+function pool(subject,level){
+ let p=BANK.filter(q=>q.s===subject&&q.l<=level);if(!p.length)p=BANK.filter(q=>q.s===subject);
+ if(subject==="Matematik")for(let i=0;i<8;i++)p.push(normalize(mathGenerated(level)));
+ return p;
+}
+function weightedPick(subject,level,preferredTopic=null){
+ let p=pool(subject,level);if(preferredTopic){const focused=p.filter(q=>q.t===preferredTopic);if(focused.length)p=focused;}
+ if(p.length>1&&current){const other=p.filter(q=>q.id!==current.id);if(other.length)p=other;}
+ let weights=p.map(q=>{const st=state.topicStats[statKey(q.s,q.t)];const miss=!st?.a?2.4:Math.max(.7,2.5-(st.c/st.a)*1.8);return miss;});
+ let r=Math.random()*weights.reduce((a,b)=>a+b,0);for(let i=0;i<p.length;i++){r-=weights[i];if(r<=0)return p[i];}return p.at(-1);
+}
+function levelName(n){return n===1?"Grund":n===2?"Normal":"Utmaning"}
+function renderSubjects(){
+ const box=document.querySelector("#subjects");box.innerHTML="";
+ Object.keys(SUBJECTS).forEach(s=>{
+  const b=document.createElement("button");b.className="subject"+(state.subject===s?" active":"");b.type="button";
+  b.innerHTML=`<span>${s}</span><small>${pct(state.subjectStats[s])}%</small>`;
+  b.addEventListener("click",()=>{state.subject=s;preferredTopic=null;save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion()});
+  box.appendChild(b);
+ });
+}
+function newTrainQuestion(generated=false){
+ locked=false;const level=Number(document.querySelector("#level").value);current=normalize(generated===true?generateMath(level):weightedPick(state.subject,level,preferredTopic));
+ document.querySelector("#subjectTitle").textContent=current.s;
+ document.querySelector("#subjectDesc").textContent=SUBJECTS[current.s].desc;
+ document.querySelector("#topicTag").textContent=current.t;document.querySelector("#levelTag").textContent=levelName(current.l);
+ document.querySelector("#question").textContent=current.q;renderAnswers("#answers",current,trainAnswer);
+ document.querySelector("#feedback").className="feedback";document.querySelector("#feedback").textContent="";
+ document.querySelector("#nextBtn").disabled=true;document.querySelector("#hintText").textContent="";renderStats();
+}
+function renderAnswers(sel,q,handler){
+ const box=document.querySelector(sel);box.innerHTML='';
+ if(q.kind==='text'||q.kind==='match'){
+  const form=document.createElement('form');form.className='answer-form';
+  if(q.kind==='text'){
+   const label=document.createElement('label');label.textContent='Ditt svar';const input=document.createElement('input');input.type='text';input.setAttribute('aria-label','Ditt svar');input.maxLength=200;input.required=true;input.autocomplete='off';label.append(input);form.append(label);
+  }else{const values=shuffle(q.source.pairs.map(p=>p[1]));for(const pair of q.source.pairs){const label=document.createElement('label');label.textContent=pair[0];const select=document.createElement('select');select.setAttribute('aria-label',pair[0]);select.required=true;const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Välj betydelse';select.append(placeholder);for(const v of values){const opt=document.createElement('option');opt.value=v;opt.textContent=v;select.append(opt);}label.append(select);form.append(label);}}
+  const submit=document.createElement('button');submit.type='submit';submit.className='secondary';submit.textContent=sel==='#examAnswers'?'Spara svar':'Kontrollera svar';form.append(submit);
+  form.onsubmit=e=>{e.preventDefault();if(!form.reportValidity())return;const value=q.kind==='text'?form.querySelector('input').value:[...form.querySelectorAll('select')].map(s=>s.value);handler(value,submit);};box.append(form);return;
+ }
+ q.a.forEach((x,i)=>{const b=document.createElement('button');b.type='button';b.className='answer';b.textContent=x;b.onclick=()=>handler(i,b);box.append(b);});
+}
+function lockAnswers(selector){document.querySelectorAll(selector+' button,'+selector+' input,'+selector+' select').forEach(b=>b.disabled=true);}
+function markAnswers(selector,q,ok,button){
+ if(!q.kind||q.kind==='choice')document.querySelectorAll(selector+' .answer')[q.c]?.classList.add('correct');
+ if(!ok)button.classList.add('wrong');lockAnswers(selector);
+}
 
+function trainAnswer(value,b){
+ if(locked)return;locked=true;const ok=answerCorrect(current,value);markAnswers('#answers',current,ok,b);record(current,ok);
+ const f=document.querySelector('#feedback');f.className='feedback '+(ok?'good':'bad');f.textContent=(ok?'Rätt. ':'Inte riktigt. Rätt svar: '+answerText(current)+'. ')+current.e;
+ document.querySelector('#nextBtn').disabled=false;
+}
+function renderStats(){
+ document.querySelector("#score").textContent=state.score;document.querySelector("#streak").textContent=state.streak;
+ document.querySelector("#todayCount").textContent=state.days[today()]||0;
+ const ta=Object.values(state.subjectStats).reduce((s,x)=>s+x.a,0),tc=Object.values(state.subjectStats).reduce((s,x)=>s+x.c,0);
+ document.querySelector("#totalAnswered").textContent=ta;document.querySelector("#overallPct").textContent=ta?Math.round(tc/ta*100)+"%":"0%";
+ document.querySelector("#activeDays").textContent=Object.keys(state.days).length;
+ renderProgress();updateSmartStart();
+}
+function startDaily(timed=false){
+ clearInterval(dailyTimer);daily={active:true,pos:0,answered:0,correct:0,q:null,subjects:shuffle(Object.keys(SUBJECTS)),deadline:timed===true?Date.now()+600000:null};document.querySelector("#dailyNextBtn").textContent="Nästa";nextDaily();
+ const clock=document.querySelector('#dailyClock');clock.textContent=timed===true?'10:00 kvar':'';
+ if(daily.deadline)dailyTimer=setInterval(()=>{if(!daily.active){clearInterval(dailyTimer);return;}const seconds=Math.max(0,Math.ceil((daily.deadline-Date.now())/1000));clock.textContent=`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')} kvar`;if(!seconds)finishDaily();},1000);
+}
+function dailyPick(){return normalize(weightedPick(daily.subjects[(daily.pos||0)%daily.subjects.length],2));}
+function nextDaily(){
+ if(!daily.active){startDaily();return}
+ if((daily.deadline&&Date.now()>=daily.deadline)||(!daily.deadline&&daily.pos>=10)){finishDaily();return}
+ daily.q=dailyPick();daily.pos++;daily.locked=false;
+ document.querySelector("#dailyPos").textContent=daily.deadline?`${daily.answered} svar`:`${daily.pos}/10`;document.querySelector("#dailyCorrect").textContent=daily.correct;
+ document.querySelector("#dailySubjectTag").textContent=daily.q.s;document.querySelector("#dailyTopicTag").textContent=daily.q.t;
+ document.querySelector("#dailyQuestion").textContent=daily.q.q;renderAnswers("#dailyAnswers",daily.q,dailyAnswer);
+ document.querySelector("#dailyFeedback").className="feedback";document.querySelector("#dailyFeedback").textContent="";
+ document.querySelector("#dailyNextBtn").disabled=true;document.querySelector("#dailyBar").style.width=(daily.deadline?Math.min(100,(600000-(daily.deadline-Date.now()))/6000):(daily.pos-1)*10)+"%";
+}
+function dailyAnswer(value,b){
+ if(daily.locked||!daily.active)return;if(daily.deadline&&Date.now()>=daily.deadline){finishDaily();return;}daily.locked=true;daily.answered++;const ok=answerCorrect(daily.q,value);if(ok)daily.correct++;markAnswers('#dailyAnswers',daily.q,ok,b);
+ record(daily.q,ok,'daily');const f=document.querySelector('#dailyFeedback');f.className='feedback '+(ok?'good':'bad');f.textContent=(ok?'Rätt. ':'Inte riktigt. Rätt svar: '+answerText(daily.q)+'. ')+daily.q.e;
+ document.querySelector('#dailyCorrect').textContent=daily.correct;document.querySelector('#dailyNextBtn').disabled=false;document.querySelector('#dailyBar').style.width=(daily.deadline?Math.min(100,(600000-(daily.deadline-Date.now()))/6000):daily.pos*10)+'%';
+ if(daily.deadline)document.querySelector('#dailyPos').textContent=daily.answered+' svar';
+ if(!daily.deadline&&daily.pos===10)document.querySelector('#dailyNextBtn').textContent='Visa resultat';
+}
+function finishDaily(){
+ clearInterval(dailyTimer);document.querySelector('#dailyClock').textContent='Passet är avslutat';
+ document.querySelector("#dailyQuestion").textContent=`Klart: ${daily.correct} av ${daily.answered} rätt (${daily.answered?Math.round(daily.correct/daily.answered*100):0} %).`;
+ document.querySelector("#dailyAnswers").innerHTML="";const f=document.querySelector("#dailyFeedback");f.className="feedback neutral";
+ const accuracy=daily.answered?daily.correct/daily.answered:0;f.textContent=!daily.answered?'Inga frågor besvarades i det här passet. Välj ett nytt pass när du vill.':accuracy>=.8?'Starkt pass. Fortsätt med de områden som systemet väljer ut.':accuracy>=.5?'Bra grund. Repetera de frågor du missade.':'Ta ett lugnt repetitionspass i ett ämne i taget innan nästa blandade pass.';
+ document.querySelector("#dailyBar").style.width="100%";document.querySelector("#dailyNextBtn").textContent="Nytt pass";document.querySelector("#dailyNextBtn").disabled=false;daily.active=false;
+}
+function setupExam(){
+ const s=document.querySelector("#examSubject");s.innerHTML=Object.keys(SUBJECTS).filter(x=>BANK.some(q=>q.s===x)).map(x=>`<option>${x}</option>`).join("");
+}
+function startExam(){
+ const s=document.querySelector("#examSubject").value,l=Number(document.querySelector("#examLevel").value);
+ const p=buildExam(pool(s,l),10).map(normalize);
+ exam={active:true,qs:p,pos:0,answers:[]};document.querySelector("#examSummary").classList.add("hidden");document.querySelector("#examArea").classList.remove("hidden");showExamQ();
+}
+function showExamQ(){
+ const q=exam.qs[exam.pos];document.querySelector("#examMeta").textContent=`${q.s} · ${q.t}`;
+ document.querySelector("#examQuestion").textContent=q.q;renderAnswers("#examAnswers",q,(i,b)=>{
+  [...document.querySelectorAll("#examAnswers .answer")].forEach(x=>{x.classList.remove("selected");x.setAttribute('aria-pressed','false');});b.classList.add("selected");b.setAttribute('aria-pressed','true');
+  exam.answers[exam.pos]=i;document.querySelector("#examNextBtn").disabled=false;
+ });
+ document.querySelector("#examCounter").textContent=`Fråga ${exam.pos+1} av ${exam.qs.length}`;document.querySelector("#examNextBtn").textContent=exam.pos===exam.qs.length-1?"Lämna in":"Nästa";document.querySelector("#examNextBtn").disabled=exam.answers[exam.pos]===undefined;
+}
+function examNext(){
+ if(exam.answers[exam.pos]===undefined)return;
+ if(exam.pos<exam.qs.length-1){exam.pos++;showExamQ();return}
+ let correct=0,details=[];exam.qs.forEach((q,i)=>{const ok=answerCorrect(q,exam.answers[i]);if(ok)correct++;record(q,ok,"exam");details.push({q,ok,chosen:exam.answers[i]})});
+ document.querySelector("#examArea").classList.add("hidden");const box=document.querySelector("#examSummary");box.classList.remove("hidden");
+ box.innerHTML=`<div class="exam-result">${correct} av ${exam.qs.length} rätt (${Math.round(correct/exam.qs.length*100)} %)</div><div class="list">${details.map(d=>`<div class="list-item"><strong>${d.ok?"✓":"✗"} ${escapeHtml(d.q.t)}: ${escapeHtml(d.q.q)}</strong><span>Ditt svar: ${escapeHtml(typeof d.chosen==='number'?d.q.a[d.chosen]:Array.isArray(d.chosen)?d.chosen.join(', '):d.chosen)}. Rätt svar: ${escapeHtml(answerText(d.q))}. ${escapeHtml(d.q.e)}</span></div>`).join("")}</div>`;
+ exam.active=false;
+}
+function allWords(){
+ const lang=wordState.lang,custom=state.customWords.filter(x=>x.lang===lang).map(x=>[x.front,x.back,true,x.id]);
+ return WORDS[lang].map((x,i)=>[...x,false,lang+i]).concat(custom);
+}
+function showWord(){
+ const list=allWords();if(!list.length)return;wordState.index=((wordState.index%list.length)+list.length)%list.length;wordState.flipped=false;
+ const w=list[wordState.index];document.querySelector("#wordFront").textContent=w[0];document.querySelector("#wordHint").textContent="Tryck på kortet för att vända";
+ renderCustomWords();
+}
+function flipWord(){
+ const list=allWords(),w=list[wordState.index];wordState.flipped=!wordState.flipped;
+ document.querySelector("#wordFront").textContent=wordState.flipped?w[1]:w[0];document.querySelector("#wordHint").textContent=wordState.flipped?w[0]:"Tryck på kortet för att vända";
+}
+function rateWord(easy){
+ const list=allWords(),w=list[wordState.index],id=w[3];if(!state.wordStats[id])state.wordStats[id]={seen:0,easy:0};
+ state.wordStats[id].seen++;if(easy)state.wordStats[id].easy++;save();
+ if(easy)wordState.index=(wordState.index+1)%list.length;
+ else {const hard=list.map((x,i)=>({i,st:state.wordStats[x[3]]||{seen:0,easy:0}})).sort((a,b)=>(a.st.easy/(a.st.seen||1))-(b.st.easy/(b.st.seen||1)));wordState.index=hard[0]?.i??((wordState.index+1)%list.length)}
+ showWord();
+}
+function speakWord(){
+ const list=allWords(),w=list[wordState.index];if(!("speechSynthesis" in window)){notice("Uppläsning stöds inte i den här webbläsaren.");return;}
+ speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang=wordState.lang==="de"?"de-DE":"en-GB";u.rate=.85;speechSynthesis.speak(u);
+}
+function renderCustomWords(){
+ const box=document.querySelector("#customWords"),list=state.customWords.filter(x=>x.lang===wordState.lang);box.innerHTML=list.length?list.map(x=>`<div class="list-item"><strong>${escapeHtml(x.front)} → ${escapeHtml(x.back)}</strong><span>Egen glosa</span></div>`).join(""):'<div class="small">Inga egna glosor ännu.</div>';
+}
+function addCustomWord(){
+ const front=document.querySelector("#customFront").value.trim().slice(0,200),back=document.querySelector("#customBack").value.trim().slice(0,200);if(!front||!back)return;
+ state.customWords.push({id:"c"+Date.now(),lang:wordState.lang,front,back});save();document.querySelector("#customFront").value="";document.querySelector("#customBack").value="";showWord();
+}
+function renderProgress(){
+ const bars=document.querySelector("#subjectBars");bars.innerHTML="";
+ const subjects=Object.keys(SUBJECTS).filter(s=>state.subjectStats[s]?.a);
+ if(!subjects.length)bars.innerHTML='<div class="small">Ingen statistik ännu.</div>';
+ subjects.forEach(s=>{let p=pct(state.subjectStats[s]);bars.innerHTML+=`<div class="bar-row"><span>${escapeHtml(s)}</span><div class="bar"><i style="width:${p}%"></i></div><strong>${p}%</strong></div>`});
+ const rec=document.querySelector("#recommendations");let topics=Object.entries(state.topicStats).filter(([k,v])=>v.a>=1).map(([k,v])=>{const [s,t]=k.split("||");return {s,t,p:pct(v),a:v.a}}).sort((a,b)=>a.p-b.p||b.a-a.a).slice(0,5);
+ rec.innerHTML=topics.length?topics.map(x=>`<div class="list-item"><strong>${escapeHtml(x.s)} · ${escapeHtml(x.t)}</strong><span>${x.p}% rätt på ${x.a} försök. ${x.p<60?"Prioritera repetition.":x.p<80?"Repetera några gånger till.":"Bra nivå."}</span></div>`).join(""):'<div class="small">Efter några frågor visas rekommendationer här.</div>';
+ const week=document.querySelector("#week");week.innerHTML="";for(let i=6;i>=0;i--){let d=new Date();d.setDate(d.getDate()-i);let k=dayKey(d),n=state.days[k]||0,day=d.toLocaleDateString("sv-SE",{weekday:"short"});week.innerHTML+=`<div class="day ${n?"done":""}"><strong>${day}</strong><span>${n?n+" frågor":"—"}</span></div>`}
+}
+function currentAIContext(){
+ if(current)return {s:current.s,text:current.q};
+ return {s:state.subject,text:""};
+}
+function tutorPrompt(subject,problem){
+ const focus=subject==="Matematik"&&state.focus.math?`\nI skolan arbetar jag just nu med: ${state.focus.math}.`:subject==="Tyska"&&state.focus.german?`\nI skolan arbetar jag just nu med: ${state.focus.german}.`:"";
+ return `Du är min studiehandledare för årskurs 7 i Sverige. Jag behöver hjälp i ${subject}.${focus}
+
+Uppgift eller fråga:
+${problem || "Hjälp mig repetera ett lämpligt område."}
+
+Regler för hur du ska hjälpa mig:
+1. Ge inte facit direkt.
+2. Börja med en kort kontrollfråga för att se vad jag redan förstår.
+3. Ge sedan en ledtråd i taget.
+4. Använd enkelt språk men rätt ämnesbegrepp.
+5. Om jag svarar fel, förklara varför och låt mig försöka igen.
+6. När jag klarat uppgiften, ge en liknande uppgift för repetition.
+7. Om det är ett faktapåstående som kan vara osäkert eller aktuellt, säg att jag bör kontrollera mot läroboken eller lärarens material.`;
+}
+function makePrompt(subject,problem){
+ document.querySelector("#aiSubject").value=subject;document.querySelector("#aiProblem").value=problem||"";
+ document.querySelector("#aiPrompt").value=tutorPrompt(subject,problem||"");
+ document.querySelector('[data-view="ai"]').click();
+}
+async function copyPrompt(){
+ const text=document.querySelector("#aiPrompt").value,st=document.querySelector("#copyStatus");
+ try{await navigator.clipboard.writeText(text);st.textContent="Kopierat."}catch(e){document.querySelector("#aiPrompt").select();st.textContent="Markera texten och kopiera manuellt."}
+}
+function saveFocus(){
+ state.focus={math:document.querySelector("#currentMath").value.trim(),german:document.querySelector("#currentGerman").value.trim(),other:document.querySelector("#currentOther").value.trim()};save();document.querySelector("#focusStatus").textContent="Sparat på den här enheten.";
+}
+function loadFocus(){
+ document.querySelector("#currentMath").value=state.focus.math||"";document.querySelector("#currentGerman").value=state.focus.german||"";document.querySelector("#currentOther").value=state.focus.other||"";
+}
+function exportData(){
+ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="alva-skoltraning-progress.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function importData(file){
+ if(file.size>2000000){notice('Filen är för stor. Välj en exporterad progressfil under 2 MB.');return;}
+ const r=new FileReader();r.onerror=()=>notice('Filen kunde inte läsas.');r.onload=()=>{try{const next=validateState(JSON.parse(r.result),Object.keys(SUBJECTS));if(!confirm('Ersätta lokala resultat och egna glosor med innehållet i filen? Exportera först om du vill behålla en säkerhetskopia.'))return;state=next;save();daily.active=false;clearInterval(dailyTimer);exam.active=false;document.querySelector('#examArea').classList.add('hidden');document.querySelector('#examSummary').classList.add('hidden');renderAll();notice('Progress importerad.');}catch{notice('Ogiltig progressfil. Dina nuvarande resultat är kvar.');}};r.readAsText(file);
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function renderAll(){renderSubjects();renderStats();renderProgress();loadFocus();showWord();newTrainQuestion()}
+function initSelectors(){
+ const opts=Object.keys(SUBJECTS).filter(s=>BANK.some(q=>q.s===s)).map(s=>`<option>${s}</option>`).join("");
+ document.querySelector("#aiSubject").innerHTML=opts;setupExam();
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+ document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));
+ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="view-"+b.dataset.view));
+ b.setAttribute('aria-current','page');document.querySelectorAll('.tab').forEach(x=>{if(x!==b)x.removeAttribute('aria-current');});
+ if(b.dataset.view==='progress')renderProgress();
+ if(b.dataset.view==='daily'&&!daily.active)startDaily();
+}));
+document.querySelector("#level").addEventListener("change",newTrainQuestion);
+document.querySelector("#skipBtn").addEventListener("click",newTrainQuestion);
+document.querySelector("#nextBtn").addEventListener("click",newTrainQuestion);
+document.querySelector("#helpCurrentBtn").addEventListener("click",()=>makePrompt(current.s,current.q));
+document.querySelector("#dailyNextBtn").addEventListener("click",nextDaily);
+document.querySelector("#dailyHelpBtn").addEventListener("click",()=>daily.q&&makePrompt(daily.q.s,daily.q.q));
+document.querySelector("#startExamBtn").addEventListener("click",startExam);
+document.querySelector("#examNextBtn").addEventListener("click",examNext);
+document.querySelector("#wordLang").addEventListener("change",e=>{wordState.lang=e.target.value;wordState.index=0;showWord()});
+document.querySelector("#flashcard").addEventListener("click",flipWord);document.querySelector("#wordFlip").addEventListener("click",flipWord);
+document.querySelector("#speakBtn").addEventListener("click",speakWord);document.querySelector("#wordEasy").addEventListener("click",()=>rateWord(true));document.querySelector("#wordHard").addEventListener("click",()=>rateWord(false));
+document.querySelector("#addWordBtn").addEventListener("click",addCustomWord);
+document.querySelector("#makePromptBtn").addEventListener("click",()=>document.querySelector("#aiPrompt").value=tutorPrompt(document.querySelector("#aiSubject").value,document.querySelector("#aiProblem").value.trim()));
+document.querySelector("#copyPromptBtn").addEventListener("click",copyPrompt);
+document.querySelector("#saveFocusBtn").addEventListener("click",saveFocus);
+document.querySelector("#exportBtn").addEventListener("click",exportData);
+document.querySelector("#importFile").addEventListener("change",e=>e.target.files[0]&&importData(e.target.files[0]));
+document.querySelector("#resetBtn").addEventListener("click",()=>{if(confirm("Nollställa all statistik och alla egna glosor?")){localStorage.removeItem(KEY);location.reload()}});
+
+function updateSmartStart(){
+ const x=chooseRecommendation(state.topicStats);const el=document.querySelector('#smartStartText'),btn=document.querySelector('#smartStartBtn');
+ if(x){el.textContent=`Rekommenderat nu: ${x.s} – ${x.t}. Du har ${x.p}% rätt på ${x.a} försök. Vi prioriterar det området.`;btn.textContent=`Träna ${x.t}`;btn.onclick=()=>{state.subject=x.s;preferredTopic=x.t;document.querySelector('#level').value='3';save();renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion();};}
+ else{el.textContent='Börja med ett kort blandat pass. Efter några svar rekommenderar sidan vad du kan repetera.';btn.textContent='Starta dagens pass';btn.onclick=()=>{document.querySelector('[data-view="daily"]').click();if(!daily.active)startDaily();};}
+}
+load();initSelectors();renderAll();
+updateSmartStart();
+
+document.querySelector('#themeBtn').onclick=()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;try{localStorage.setItem('alva-smart-theme',next);}catch{}};
+document.querySelector('#hintBtn').onclick=()=>{document.querySelector('#hintText').textContent=current.h||('Fundera på området '+current.t+'. Försök förklara begreppen i frågan innan du väljer svar.');};
+document.querySelector('#flashcard').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flipWord();}};
+document.querySelector('#generatorBtn').onclick=()=>{state.subject='Matematik';preferredTopic=null;renderSubjects();document.querySelector('[data-view="train"]').click();newTrainQuestion(true);};
+document.querySelector('#timedStartBtn').onclick=()=>startDaily(true);
+document.querySelector('#endDailyBtn').onclick=()=>{if(daily.active)finishDaily();};
