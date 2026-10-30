@@ -1,8 +1,8 @@
-import {initCourses} from './courses.js?v=20261029-rome1';
-import {initReferences} from './references.js?v=20261029-rome1';
+import {initCourses} from './courses.js?v=20261030-reading1';
+import {initReferences} from './references.js?v=20261030-reading1';
 import {generateMath} from './math.js';
-import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js?v=20261029-rome1';
-import {SUBJECTS,BANK,WORDS} from './data.js?v=20261029-rome1';
+import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js?v=20261030-reading1';
+import {SUBJECTS,BANK,WORDS} from './data.js?v=20261030-reading1';
 import {shuffle,dayKey,validateState,buildExam,answerCorrect,answerText,chooseRecommendation} from './core.js';
 const KEY="alva-school-v2";
 const today=()=>dayKey();
@@ -65,6 +65,7 @@ function renderSubjects(){
 function newTrainQuestion(generated=false){
  locked=false;const level=Number(document.querySelector("#level").value);current=normalize(generated===true?generateMath(level):weightedPick(state.subject,level,preferredTopic));
  document.querySelector("#subjectTitle").textContent=current.s;
+ document.querySelector('#generatorBtn').hidden=current.s!=='Matematik';
  document.querySelector("#subjectDesc").textContent=SUBJECTS[current.s].desc;
  document.querySelector("#topicTag").textContent=current.t;document.querySelector("#levelTag").textContent=levelName(current.l);
  document.querySelector("#question").textContent=current.q;renderAnswers("#answers",current,trainAnswer);

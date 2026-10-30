@@ -1,4 +1,6 @@
-import {ROME_QUESTIONS} from './rome.js?v=20261029-rome1';
+import {READING_QUESTIONS} from './reading-questions.js?v=20261030-reading1';
+import {KNOWLEDGE_QUESTIONS} from './knowledge-questions.js?v=20261030-reading1';
+import {ROME_QUESTIONS} from './rome.js?v=20261030-reading1';
 import {subjects as additionalSubjects} from './questions.js';
 import {extraContent} from './extra-content.js';
 const SUBJECTS={
@@ -100,3 +102,8 @@ BANK.push(...extraContent);
 
 SUBJECTS.Historia.topics.push("Romartiden");
 BANK.push(...ROME_QUESTIONS);
+
+SUBJECTS.Religion.topics.push("Kristendom","Islam","Judendom","Buddhism","Hinduism");
+BANK.push(...KNOWLEDGE_QUESTIONS);
+
+BANK.push(...READING_QUESTIONS);

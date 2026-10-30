@@ -44,3 +44,15 @@ AI-kursens vidare läsning: [Internetstiftelsens källkritiska AI-sökning](http
 Grundämnesbegreppet kontrollerades mot [IUPAC Gold Book: chemical element](https://goldbook.iupac.org/terms/view/C01022). Elevernas förklaring är förenklad och självständigt formulerad: samma antal protoner innebär samma grundämne. Molekyl och kemisk förening skiljs tydligt åt. O₂ består av en sorts atomer; H₂O innehåller två olika grundämnen. Texten nämner att alla föreningar inte består av separata molekyler, exempelvis koksalt.
 
 Partikelmodellen är symbolisk: färger, storlekar, vinklar och avstånd visar inte en exakt fysikalisk bild. Den visar färdiga exempel och kan inte användas för att avgöra vilka nya molekyler som faktiskt kan bildas.
+
+## Utbyggnad av alla skolämnen, 30 oktober 2026
+
+66 nya självständigt skrivna lästexter har lagts till och tidigare översikter, kemi- och matematiktexter har fått förklarande stycken. Totalt 100 avsnitt och cirka 22 000 ord i lästexter, exempel och återberättelseövningar. Detta är ett utökat komplement, inte en fullständig eller externt granskad lärobok för hela högstadiet.
+
+Religionsmaterialet skiljer traditionernas trosutsagor från historiska påståenden och betonar variation inom grupper. De namngivna religionerna har egna avsnitt och frågor. Jämförelsen använder samma slags frågor för alla fem religioner. Religionsfrihet, icke-religiösa livsåskådningar och etiska resonemang behandlas separat.
+
+Fördjupningslänkarna i `references.js` kompletterades med [Svenska kyrkans förklaring av treenigheten](https://www.svenskakyrkan.se/kristentro/treenigheten), [dop](https://www.svenskakyrkan.se/kristentro/dopet) och [nattvard](https://www.svenskakyrkan.se/kristentro/nattvarden), [Islamiska Förbundets frågor och svar](https://www.islamiskaforbundet.se/fragor-och-svar/), [Judiska Församlingen i Göteborgs högtider](https://www.judiskaforsamlingen.se/judiska-helgdagar.php), [Sveriges buddhistiska samarbetsråds introduktion](https://buddhism-sbs.se/svenska/om-buddhism/) och [Harvard Divinity Schools hinduismprofil](https://rpl.hds.harvard.edu/resource/hinduism). Samfundskällorna märks som inifrånperspektiv, inte som företrädare för alla troende. [Skolverkets kommentarmaterial](https://www.skolverket.se/download/18.66960151804bed21fd13c5/1652442936651/pdf9799.pdf) lästes för orientering om jämförelse, tolkning och livsåskådningar; full överensstämmelse med en specifik klassplan har inte verifierats.
+
+Hälsa och säkerhet hålls på en allmän undervisningsnivå. Länkar till Folkhälsomyndigheten, Naturvårdsverket, Brottsoffermyndigheten och Finlands svenskspråkiga livsmedelsverk ger fördjupning. Juridiska exempel är inte råd i enskilda ärenden. Matlagnings- och elektricitetsövningar hänvisar till lärarens anvisningar och godkänd utrustning.
+
+26 automatiska tester kontrollerar bland annat att varje deklarerat ämnesområde har relevant lästext och fokuserad träning, att religionsfrågor länkar till rätt tradition och att ett avsnitt från fel ämne inte kan ta över frågans förklaring. Webbläsarkontroll genomfördes för alla 16 ämnens innehållsväljare och för religionens läsning, källor och övningar.

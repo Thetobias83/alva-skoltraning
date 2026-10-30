@@ -1,4 +1,9 @@
-import {ROME_LESSONS} from './rome.js?v=20261029-rome1';
+import {KNOWLEDGE_LESSONS} from './knowledge.js?v=20261030-reading1';
+import {READING_LESSONS} from './subject-reading.js?v=20261030-reading1';
+import {MORE_READING} from './more-reading.js?v=20261030-reading1';
+import {PRACTICAL_READING} from './practical-reading.js?v=20261030-reading1';
+import {EXPLANATION_EXTENSIONS} from './enrichment.js?v=20261030-reading1';
+import {ROME_LESSONS} from './rome.js?v=20261030-reading1';
 // Original short explanations. Concept notes and examples are written for this site.
 const lesson=(id,subject,topics,title,intro,paragraphs,example,mistake,recall,answer,terms=[])=>({id,subject,topics,title,intro,paragraphs,example,mistake,recall,answer,terms});
 export const LESSONS=[
@@ -225,9 +230,15 @@ lesson('math-speed','Matematik',['Samband'],'Hastighet är sträcka delat med ti
 'Att sträckan delad med tiden motsvarar 12 kilometer per timme i genomsnitt.',[['Medelhastighet','Hela sträckan delad med hela tiden.']])
 );
 LESSONS.push(...ROME_LESSONS);
-export function lessonsFor(subject){return LESSONS.filter(l=>l.subject===subject);}
+const expandedLessons=[...KNOWLEDGE_LESSONS,...READING_LESSONS,...MORE_READING,...PRACTICAL_READING];
+
+for(const l of KNOWLEDGE_LESSONS)if(['Kristendom','Islam','Judendom','Buddhism','Hinduism'].includes(l.topics[0]))l.referenceSubject=l.topics[0];
+LESSONS.push(...expandedLessons);
+for(const l of LESSONS)if(EXPLANATION_EXTENSIONS[l.id])l.paragraphs.push(...EXPLANATION_EXTENSIONS[l.id]);
+export function lessonsFor(subject){const list=LESSONS.filter(l=>l.subject===subject);return [...list.filter(l=>expandedLessons.includes(l)),...list.filter(l=>!expandedLessons.includes(l))];}
+
 export function lessonForQuestion(q){
- if(q.s==='Historia'&&q.lessonId?.startsWith('rome-')){const specific=LESSONS.find(l=>l.id===q.lessonId);if(specific)return specific;}
+ if(q.lessonId){const specific=LESSONS.find(l=>l.id===q.lessonId&&l.subject===q.s);if(specific)return specific;}
 
  if(q.s==='Kemi'){
   if(/grundämne/i.test(q.q))return LESSONS.find(l=>l.id==='chem-elements');
