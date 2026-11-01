@@ -1,6 +1,8 @@
-import {READING_QUESTIONS} from './reading-questions.js?v=20261030-reading1';
-import {KNOWLEDGE_QUESTIONS} from './knowledge-questions.js?v=20261030-reading1';
-import {ROME_QUESTIONS} from './rome.js?v=20261030-reading1';
+import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261101-curriculum1';
+import {CURRICULUM_MORE} from './curriculum-more.js?v=20261101-curriculum1';
+import {READING_QUESTIONS} from './reading-questions.js?v=20261101-curriculum1';
+import {KNOWLEDGE_QUESTIONS} from './knowledge-questions.js?v=20261101-curriculum1';
+import {ROME_QUESTIONS} from './rome.js?v=20261101-curriculum1';
 import {subjects as additionalSubjects} from './questions.js';
 import {extraContent} from './extra-content.js';
 const SUBJECTS={
@@ -21,6 +23,8 @@ const SUBJECTS={
 "Bild":{desc:"Bildframställning, bildanalys, tekniker och visuell kommunikation.",topics:["Bildanalys","Komposition","Tekniker","Kommunikation"]},
 "Musik":{desc:"Musicerande, musikskapande, begrepp och musikens funktioner.",topics:["Begrepp","Instrument","Musikskapande","Musik i samhället"]}
 };
+
+for(const chapter of [...CURRICULUM_LESSONS,...CURRICULUM_MORE])for(const topic of chapter.topics)if(!SUBJECTS[chapter.subject].topics.includes(topic))SUBJECTS[chapter.subject].topics.push(topic);
 
 const BANK=[
 ["Matematik","Procent",1,"Vad är 25 % av 200?",["25","40","50","75"],2,"25 % är en fjärdedel. 200 ÷ 4 = 50."],

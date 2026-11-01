@@ -56,3 +56,11 @@ Fördjupningslänkarna i `references.js` kompletterades med [Svenska kyrkans fö
 Hälsa och säkerhet hålls på en allmän undervisningsnivå. Länkar till Folkhälsomyndigheten, Naturvårdsverket, Brottsoffermyndigheten och Finlands svenskspråkiga livsmedelsverk ger fördjupning. Juridiska exempel är inte råd i enskilda ärenden. Matlagnings- och elektricitetsövningar hänvisar till lärarens anvisningar och godkänd utrustning.
 
 26 automatiska tester kontrollerar bland annat att varje deklarerat ämnesområde har relevant lästext och fokuserad träning, att religionsfrågor länkar till rätt tradition och att ett avsnitt från fel ämne inte kan ta över frågans förklaring. Webbläsarkontroll genomfördes för alla 16 ämnens innehållsväljare och för religionens läsning, källor och övningar.
+
+## Lgr22: jämförelse av alla 16 ämnen, 1 november 2026
+
+Skolverkets originalkursplaner för samtliga ämnen lästes, med fokus på centralt innehåll åk 7–9. Ingång: https://syllabuswebb.skolverket.se/compulsorycw/jsp/curriculum.htm?cur=LGR22&tos=gr . Direktlänkar per ämne finns i curriculum-guide.js och Läs vidare. Moderna språk avser språkval. De egna översikterna sammanfattar bredden; de är inte en avprickning av fullgjord undervisning. Historia inkluderar tidiga samhällen som bakgrund, utöver högstadiets större tidsperioder.
+
+44 nya lektioner (curriculum-lessons.js och curriculum-more.js) kompletterar luckor. Varje lektion har en praktisk eller undersökande uppgift, men ingen sådan uppgift markeras automatiskt som genomförd. En definitionsfråga prövar endast ett begrepp, inte hela området eller praktisk förmåga.
+
+Särskild faktakontroll gjordes mot 1177 om antibiotika, UMO om frivillighet och skydd, Konsumentverket om öppet köp/bytesrätt, Isof om minoritetsspråk och Forum för levande historia om Förintelsen och Gulag. Länkar till lämpligt vidare material ligger i references.js. Primärkälla för rättighetsdefinitionen av folkmord: FN:s folkmordskonvention (kursplanens undervisningsområde). Ingen individuell medicinsk eller juridisk rådgivning ges i övningarna.

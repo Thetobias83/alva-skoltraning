@@ -1,5 +1,12 @@
+import {CURRICULUM_GUIDE,curriculumUrl} from './curriculum-guide.js?v=20261101-curriculum1';
 const resource=(subject,provider,title,url,description,language='Svenska')=>({subject,provider,title,url,description,language});
 export const REFERENCES=[
+ ...Object.keys(CURRICULUM_GUIDE).map(subject=>resource(subject,'Skolverket','Kursplan: centralt innehåll för åk 7–9',curriculumUrl(subject),'Originalkursplanen. Den omfattar hela högstadiet; skolan planerar fördelningen mellan årskurserna.')),
+ resource('Biologi','UMO','Kropp, relationer och samtycke','https://www.umo.se/sex/regler-och-lagar-om-sex/sex-och-samtycke2/','Saklig ungdomsanpassad information om frivillighet och gränser.'),
+ resource('Biologi','1177','Frågor och svar om antibiotika','https://www.1177.se/Stockholm/undersokning-behandling/behandling-med-lakemedel/om-lakemedel/fragor-och-svar-om-antibiotika/','Skillnaden mellan bakterier och virus och varför antibiotika inte hjälper mot virus.'),
+ resource('Historia','Forum för levande historia','Fakta om Förintelsen','https://www.levandehistoria.se/fakta/forintelsen','Myndighetens faktamaterial och undervisningsresurser.'),
+ resource('Svenska','Isof','Sveriges nationella minoritetsspråk','https://frageladan.isof.se/faqs/27987','Språkmyndighetens förklaring av de fem nationella minoritetsspråken.'),
+ resource('Hem- & konsumentkunskap','Konsumentverket','Öppet köp och bytesrätt','https://www.konsumentverket.se/konsumentratt/oppet-kop-och-bytesratt/','Skilj frivilliga butiksvillkor från lagstadgade rättigheter och kontrollera ditt konkreta köp.'),
  resource('Kristendom','Svenska kyrkan','Treenigheten – ett kristet inifrånperspektiv','https://www.svenskakyrkan.se/kristentro/treenigheten','Svenska kyrkan förklarar sin tro. Jämför perspektivet med lektionens beskrivning av flera kristna kyrkor.'),
  resource('Kristendom','Svenska kyrkan','Dopet','https://www.svenskakyrkan.se/kristentro/dopet','Läs om dopets betydelse i Svenska kyrkan. Dop förstås och genomförs på olika sätt i olika kristna traditioner.'),
  resource('Kristendom','Svenska kyrkan','Nattvarden','https://www.svenskakyrkan.se/kristentro/nattvarden','Ett lutherskt kyrkligt perspektiv på den heliga måltiden.'),

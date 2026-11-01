@@ -64,3 +64,11 @@ Materialet är en bred introduktion för årskurs 7, inte en verifierad återgiv
 GitHub Pages använder **Deploy from a branch → main → / (root)**. Alla egna resurser använder relativa sökvägar och fungerar under `/alva-skoltraning/`. `.nojekyll` finns i roten. Pusha ändringar till main för ny publicering.
 
 Webbplatsen kan även publiceras på annan statisk webbhosting genom att använda rotens HTML-, CSS- och JavaScript-filer. Ingen backend, API-nyckel, betald API eller PWA-installation behövs. Sites kunde inte användas i publiceringssessionen eftersom verktyget svarade att det inte var tillgängligt.
+
+## Läroplansutbyggnad, 1 november 2026
+
+44 nya avsnitt ger totalt 144 lektioner och 314 fasta frågor. Alla 16 ämnen har en utfällbar översikt över centralt innehåll i Lgr22 åk 7–9 med direktlänk till Skolverkets ämneskursplan. Tyska avser språkval. Fördelningen mellan årskurser bestäms av skolan.
+
+De nya avsnitten innehåller förklarande stycken, exempel, vanliga missförstånd, begrepp, återberättelse och en undersökande uppgift. Nya områden omfattar bland annat statistik, funktioner, litteratur, språkvariation, universum, strålning, bioteknik, världskrig, minoriteter, digitala system, konsumenträtt, bildprocesser och musikaliskt samspel. Detta är en fortsatt utbyggnad, inte ett påstående om fullständig läroplanstäckning. Praktiska färdigheter och muntliga resonemang behöver undervisning och kan inte bedömas genom quiz.
+
+28 automatiska tester kontrollerar bland annat ämneskopplingar, källor, fokuserade frågor och att simning uttryckligen hänvisar till praktisk undervisning. Läroplanssammanfattningarna och lästexterna är självständigt skrivna; Skolverket har inte granskat webbplatsen.
