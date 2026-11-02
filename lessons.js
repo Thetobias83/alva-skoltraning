@@ -1,12 +1,12 @@
-import {STUDY_LESSONS} from './study-skills.js?v=20261102-study1';
-import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261102-study1';
-import {CURRICULUM_MORE} from './curriculum-more.js?v=20261102-study1';
-import {KNOWLEDGE_LESSONS} from './knowledge.js?v=20261102-study1';
-import {READING_LESSONS} from './subject-reading.js?v=20261102-study1';
-import {MORE_READING} from './more-reading.js?v=20261102-study1';
-import {PRACTICAL_READING} from './practical-reading.js?v=20261102-study1';
-import {EXPLANATION_EXTENSIONS} from './enrichment.js?v=20261102-study1';
-import {ROME_LESSONS} from './rome.js?v=20261102-study1';
+import {STUDY_LESSONS} from './study-skills.js?v=20261102-study2';
+import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261102-study2';
+import {CURRICULUM_MORE} from './curriculum-more.js?v=20261102-study2';
+import {KNOWLEDGE_LESSONS} from './knowledge.js?v=20261102-study2';
+import {READING_LESSONS} from './subject-reading.js?v=20261102-study2';
+import {MORE_READING} from './more-reading.js?v=20261102-study2';
+import {PRACTICAL_READING} from './practical-reading.js?v=20261102-study2';
+import {EXPLANATION_EXTENSIONS} from './enrichment.js?v=20261102-study2';
+import {ROME_LESSONS} from './rome.js?v=20261102-study2';
 // Original short explanations. Concept notes and examples are written for this site.
 const lesson=(id,subject,topics,title,intro,paragraphs,example,mistake,recall,answer,terms=[])=>({id,subject,topics,title,intro,paragraphs,example,mistake,recall,answer,terms});
 export const LESSONS=[

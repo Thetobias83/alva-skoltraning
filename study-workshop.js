@@ -1,4 +1,4 @@
-import {STUDY_VIDEOS} from './study-skills.js?v=20261102-study1';
+import {STUDY_VIDEOS} from './study-skills.js?v=20261102-study2';
 const studyHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const STUDY_TEXT_PRACTICE={
  question:'Varför var vägarna viktiga i Romarriket?',

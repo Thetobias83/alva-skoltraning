@@ -1,9 +1,9 @@
-import {renderStudyExtras,initStudyExtras} from './study-workshop.js?v=20261102-study1';
-import {renderSubjectNavigation} from './study-navigation.js?v=20261102-study1';
-import {SUBJECTS} from './data.js?v=20261102-study1';
-import {ROME_TIMELINE} from './rome.js?v=20261102-study1';
-import {lessonReferences} from './references.js?v=20261102-study1';
-import {LESSONS,MOLECULES,lessonsFor,lessonForQuestion} from './lessons.js?v=20261102-study1';
+import {renderStudyExtras,initStudyExtras} from './study-workshop.js?v=20261102-study2';
+import {renderSubjectNavigation} from './study-navigation.js?v=20261102-study2';
+import {SUBJECTS} from './data.js?v=20261102-study2';
+import {ROME_TIMELINE} from './rome.js?v=20261102-study2';
+import {lessonReferences} from './references.js?v=20261102-study2';
+import {LESSONS,MOLECULES,lessonsFor,lessonForQuestion} from './lessons.js?v=20261102-study2';
 const html=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let activeLesson=null,onPractice=()=>{},onRomeExam=()=>{};
 function openView(){document.querySelector('[data-view="learn"]').click();}

@@ -1,4 +1,4 @@
-import {LESSONS} from './lessons.js?v=20261102-study1';
+import {LESSONS} from './lessons.js?v=20261102-study2';
 const readingChapters=LESSONS.filter(l=>l.id.startsWith('curriculum-')||l.id.startsWith('reading-')||l.id.startsWith('knowledge-')||['Matematik','Kemi'].includes(l.subject)||l.id==='history-basics');
 // Vocabulary checks support each chapter; open self-explanations cover deeper reasoning.
 export const READING_QUESTIONS=readingChapters.flatMap((l,index)=>(l.id==='history-basics'?['Källor']:l.topics).map((topic,topicIndex)=>{

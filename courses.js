@@ -1,5 +1,5 @@
-import {CPP_COURSE} from './cpp-course.js?v=20261102-study1';
-import {referenceCards} from './references.js?v=20261102-study1';
+import {CPP_COURSE} from './cpp-course.js?v=20261102-study2';
+import {referenceCards} from './references.js?v=20261102-study2';
 const unit=(id,title,text,example,task,question,options,answer,explanation)=>({id,title,text,example,task,question,options,answer,explanation});
 export const COURSES=[
  CPP_COURSE,

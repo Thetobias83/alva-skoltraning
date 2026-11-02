@@ -1,4 +1,4 @@
-import {CURRICULUM_GUIDE,curriculumUrl} from './curriculum-guide.js?v=20261102-study1';
+import {CURRICULUM_GUIDE,curriculumUrl} from './curriculum-guide.js?v=20261102-study2';
 const resource=(subject,provider,title,url,description,language='Svenska')=>({subject,provider,title,url,description,language});
 export const REFERENCES=[
  resource('Studieteknik','UR Play','Anteckna smart · video, 1 min','https://urplay.se/program/215469-orka-plugga-anteckna-smart','En kort film för högstadiet. Prova ett anteckningstips direkt efteråt. Svensk textning anges hos UR.'),

@@ -1,4 +1,4 @@
-import {curriculumSummary} from './curriculum-guide.js?v=20261102-study1';
+import {curriculumSummary} from './curriculum-guide.js?v=20261102-study2';
 const studyEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const RELIGION_ROWS=[
  ['Kristendom','Jesus och hans betydelse; för de flesta kyrkor tron på en treenig Gud.','Bibeln; dop, nattvard och gudstjänst i olika former.','Katolska, ortodoxa och protestantiska traditioner samt variation inom dem.'],
