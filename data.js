@@ -1,12 +1,14 @@
-import {STUDY_QUESTIONS} from './study-questions.js?v=20261102-office1';
-import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261102-office1';
-import {CURRICULUM_MORE} from './curriculum-more.js?v=20261102-office1';
-import {READING_QUESTIONS} from './reading-questions.js?v=20261102-office1';
-import {KNOWLEDGE_QUESTIONS} from './knowledge-questions.js?v=20261102-office1';
-import {ROME_QUESTIONS} from './rome.js?v=20261102-office1';
+import {ADULT_LESSONS,ADULT_QUESTIONS} from './adult-knowledge.js?v=20261102-adult1';
+import {STUDY_QUESTIONS} from './study-questions.js?v=20261102-adult1';
+import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261102-adult1';
+import {CURRICULUM_MORE} from './curriculum-more.js?v=20261102-adult1';
+import {READING_QUESTIONS} from './reading-questions.js?v=20261102-adult1';
+import {KNOWLEDGE_QUESTIONS} from './knowledge-questions.js?v=20261102-adult1';
+import {ROME_QUESTIONS} from './rome.js?v=20261102-adult1';
 import {subjects as additionalSubjects} from './questions.js';
 import {extraContent} from './extra-content.js';
 const SUBJECTS={
+"Vuxenkunskap":{desc:"Skatt, deklaration, jobb och vardagsekonomi samt en aktieskola med risk, fonder och sparbegrepp. Svenska regler och påhittade övningar.",topics:ADULT_LESSONS.flatMap(l=>l.topics)},
 "Studieteknik":{desc:"Lär dig plugga i små steg: minnas, repetera, anteckna, förstå texter och förbereda prov.",topics:["Komma igång","Minnas aktivt","Repetition","Anteckna","Viktig information","Sammanfatta och förstå","Minnesknep","Inför prov"]},
 "Matematik":{desc:"Tal, algebra, geometri, procent, statistik, sannolikhet, samband och problemlösning.",topics:["Tal","Procent","Algebra","Geometri","Bråk","Sannolikhet","Samband"]},
 "Svenska":{desc:"Läsförståelse, skrivande, grammatik, muntlig framställning och källkritik.",topics:["Grammatik","Läsförståelse","Källkritik","Texttyper","Språkbruk"]},
@@ -112,4 +114,4 @@ BANK.push(...ROME_QUESTIONS);
 SUBJECTS.Religion.topics.push("Kristendom","Islam","Judendom","Buddhism","Hinduism");
 BANK.push(...KNOWLEDGE_QUESTIONS);
 
-BANK.push(...READING_QUESTIONS,...STUDY_QUESTIONS);
+BANK.push(...READING_QUESTIONS,...STUDY_QUESTIONS,...ADULT_QUESTIONS);

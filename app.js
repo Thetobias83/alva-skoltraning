@@ -1,8 +1,8 @@
-import {initCourses} from './courses.js?v=20261102-office1';
-import {initReferences} from './references.js?v=20261102-office1';
+import {initCourses} from './courses.js?v=20261102-adult1';
+import {initReferences} from './references.js?v=20261102-adult1';
 import {generateMath} from './math.js';
-import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js?v=20261102-office1';
-import {SUBJECTS,BANK,WORDS} from './data.js?v=20261102-office1';
+import {initLearning,showLessonFor,renderQuestionIntro} from './learning.js?v=20261102-adult1';
+import {SUBJECTS,BANK,WORDS} from './data.js?v=20261102-adult1';
 import {shuffle,dayKey,validateState,buildExam,answerCorrect,answerText,chooseRecommendation} from './core.js';
 const KEY="alva-school-v2";
 const today=()=>dayKey();

@@ -90,3 +90,9 @@ Word går från skrivande och sparande till rubrikformat, granskning, källor oc
 Excel-övningsdata skapas lokalt som UTF-8-CSV med BOM och semikolon. Sex påhittade inköpsrader ger 195 kr totalt, Frukt 73 kr och Skolmaterial 122 kr. CSV innehåller inga formler, makron eller personuppgifter. Eleven bygger formlerna själv och sparar arbetsfilen som .xlsx. Nedladdningsdialogen kunde inte verifieras eftersom webbläsarverktygets väntan hängde sig; filinnehåll och kontrollvärden är automatiskt testade. Alla 27 steg och sex kursval kontrollerades i webbläsaren.
 
 Office-programmen körs inte här. Praktiken görs i en Office-version eleven har tillgång till; menyer och funktioner varierar. XLETAUPP är markerad som otillgänglig i Excel 2016/2019. Microsofts egna guider och filmartiklar länkas som fördjupning. 33 automatiska tester godkända.
+
+## Vuxenkunskap och granskning, 2 november 2026
+
+17 avsnitt i Vuxenkunskap med egen menyknapp: lön, skatt, deklaration, avdrag, anställning, pension, budget, räkningar, lån, avtal, försäkring samt aktier, fonder, riskspridning, avgifter, ISK/depå och ränta på ränta. Digital trygghet och investeringsbedrägerier ingår. Varje avsnitt har relevanta källor och kontrolldatum. Budget- och ränta-på-ränta-verkstäder körs lokalt med påhittade belopp och sparar inga uppgifter. Ingen finansiell transaktion, kontoregistrering eller deklaration görs.
+
+Totalt 18 ämnen/stödområden, 169 läsavsnitt, 372 fasta frågor och sex kurser, varav tre Office-kurser med 27 steg. 37 automatiska tester passerar. Granskningsomfattning, korrigeringar och kvarvarande begränsningar redovisas i FACT-CHECK.md och i sidans utfällbara information om faktakontroll. Slutlig webbläsarkontroll av Vuxenkunskap blockerades av verktygets användningsgräns; Office-stegen hade redan kontrollerats lokalt.

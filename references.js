@@ -1,6 +1,9 @@
-import {CURRICULUM_GUIDE,curriculumUrl} from './curriculum-guide.js?v=20261102-office1';
+import {ADULT_SOURCES} from './adult-knowledge.js?v=20261102-adult1';
+import {CURRICULUM_GUIDE,curriculumUrl} from './curriculum-guide.js?v=20261102-adult1';
 const resource=(subject,provider,title,url,description,language='Svenska')=>({subject,provider,title,url,description,language});
 export const REFERENCES=[
+ resource('Romartiden','The Metropolitan Museum of Art','Konstantinopel efter 1261','https://www.metmuseum.org/ja/essays/constantinople-after-1261','Museets historiska bakgrund om erövringen 1204 och återupprättat bysantinskt styre 1261.','Engelska · fördjupning'),
+ ...Object.values(ADULT_SOURCES).map(s=>resource('Vuxenkunskap',s.provider,s.title,s.url,'Kontrollerad som källa 2 november 2026. Läs aktuell vägledning och välj rätt inkomstår när det gäller skatt.')),
  ...['Word','Excel','PowerPoint'].map(subject=>resource(subject,'Microsoft Support',`Hjälp och utbildning för ${subject}`,`https://support.microsoft.com/sv-se/${subject.toLowerCase()}/`,'Välj ämne och din programversion. Menyer och funktioner varierar mellan webb, Windows och Mac.')),
  resource('Word','Microsoft Support','Rubriker och formatmallar – guide med video','https://support.microsoft.com/sv-se/word/add-a-heading-in-a-word-document','Förstå rubriknivåer och varför formatmallar hjälper vid längre rapporter.'),
  resource('Excel','Microsoft Support','SUMMA – summera ett område','https://support.microsoft.com/sv-se/excel/functions/sum-function','Funktionsbeskrivning och exempel att jämföra med övningen.'),

@@ -1,12 +1,13 @@
-import {STUDY_LESSONS} from './study-skills.js?v=20261102-office1';
-import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261102-office1';
-import {CURRICULUM_MORE} from './curriculum-more.js?v=20261102-office1';
-import {KNOWLEDGE_LESSONS} from './knowledge.js?v=20261102-office1';
-import {READING_LESSONS} from './subject-reading.js?v=20261102-office1';
-import {MORE_READING} from './more-reading.js?v=20261102-office1';
-import {PRACTICAL_READING} from './practical-reading.js?v=20261102-office1';
-import {EXPLANATION_EXTENSIONS} from './enrichment.js?v=20261102-office1';
-import {ROME_LESSONS} from './rome.js?v=20261102-office1';
+import {ADULT_LESSONS} from './adult-knowledge.js?v=20261102-adult1';
+import {STUDY_LESSONS} from './study-skills.js?v=20261102-adult1';
+import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261102-adult1';
+import {CURRICULUM_MORE} from './curriculum-more.js?v=20261102-adult1';
+import {KNOWLEDGE_LESSONS} from './knowledge.js?v=20261102-adult1';
+import {READING_LESSONS} from './subject-reading.js?v=20261102-adult1';
+import {MORE_READING} from './more-reading.js?v=20261102-adult1';
+import {PRACTICAL_READING} from './practical-reading.js?v=20261102-adult1';
+import {EXPLANATION_EXTENSIONS} from './enrichment.js?v=20261102-adult1';
+import {ROME_LESSONS} from './rome.js?v=20261102-adult1';
 // Original short explanations. Concept notes and examples are written for this site.
 const lesson=(id,subject,topics,title,intro,paragraphs,example,mistake,recall,answer,terms=[])=>({id,subject,topics,title,intro,paragraphs,example,mistake,recall,answer,terms});
 export const LESSONS=[
@@ -233,7 +234,7 @@ lesson('math-speed','Matematik',['Samband'],'Hastighet är sträcka delat med ti
 'Att sträckan delad med tiden motsvarar 12 kilometer per timme i genomsnitt.',[['Medelhastighet','Hela sträckan delad med hela tiden.']])
 );
 LESSONS.push(...ROME_LESSONS);
-const expandedLessons=[...KNOWLEDGE_LESSONS,...READING_LESSONS,...MORE_READING,...PRACTICAL_READING,...CURRICULUM_LESSONS,...CURRICULUM_MORE,...STUDY_LESSONS];
+const expandedLessons=[...KNOWLEDGE_LESSONS,...READING_LESSONS,...MORE_READING,...PRACTICAL_READING,...CURRICULUM_LESSONS,...CURRICULUM_MORE,...STUDY_LESSONS,...ADULT_LESSONS];
 
 for(const l of KNOWLEDGE_LESSONS)if(['Kristendom','Islam','Judendom','Buddhism','Hinduism'].includes(l.topics[0]))l.referenceSubject=l.topics[0];
 LESSONS.push(...expandedLessons);

@@ -1,4 +1,4 @@
-import {OFFICE_DATA,OFFICE_LEVELS,officeCsv} from './office-courses.js?v=20261102-office1';
+import {OFFICE_DATA,OFFICE_LEVELS,officeCsv} from './office-courses.js?v=20261102-adult1';
 const officeEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const OFFICE_HELP={
  Word:{url:'https://support.microsoft.com/sv-se/word/',video:'https://support.microsoft.com/sv-se/word/add-a-heading-in-a-word-document',title:'Rubriker och formatmallar · guide med video'},
