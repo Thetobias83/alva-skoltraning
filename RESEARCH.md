@@ -64,3 +64,9 @@ Skolverkets originalkursplaner för samtliga ämnen lästes, med fokus på centr
 44 nya lektioner (curriculum-lessons.js och curriculum-more.js) kompletterar luckor. Varje lektion har en praktisk eller undersökande uppgift, men ingen sådan uppgift markeras automatiskt som genomförd. En definitionsfråga prövar endast ett begrepp, inte hela området eller praktisk förmåga.
 
 Särskild faktakontroll gjordes mot 1177 om antibiotika, UMO om frivillighet och skydd, Konsumentverket om öppet köp/bytesrätt, Isof om minoritetsspråk och Forum för levande historia om Förintelsen och Gulag. Länkar till lämpligt vidare material ligger i references.js. Primärkälla för rättighetsdefinitionen av folkmord: FN:s folkmordskonvention (kursplanens undervisningsområde). Ingen individuell medicinsk eller juridisk rådgivning ges i övningarna.
+
+## Studieteknik, 2 november 2026
+
+UR:s sida om Orka plugga och direkta programsidor kontrollerades: Anteckna smart (215469, 1 min), Plugga effektivt (219574, 4 min), Förbättra minnet med loci-metoden (217196, 3 min) samt Lässtrategier (serie 201900). UR anger högstadienivå och svensk textning för de kontrollerade antecknings- och minnesfilmerna. De egna filmfrågorna hjälper eleven omsätta ett tips i handling. Ingen fil laddas ned eller återpubliceras. Spelaråtkomst med elevens konto har inte verifierats; inloggning och rättigheter kan variera.
+
+Örebro universitets Anteckna för att minnas och lära användes för kontroll av anteckningsmallar och vidare läsning. The Learning Scientists FAQ och deras forskningsförankrade material kontrollerades för aktiv återkallning och utspridd repetition: https://www.learningscientists.org/faq . Egna förenklade exempel används, utan påståenden om fasta lärstilar eller universellt optimala intervall. Förslagen om korta pass och repetitionsdagar är exempel som kan anpassas. Minnesknep skiljs från förståelse.

@@ -4,7 +4,7 @@ import {BANK,SUBJECTS} from '../data.js';
 import {buildExam,answerCorrect,answerText,shuffle,validateState,chooseRecommendation,dayKey} from '../core.js';
 import {generateMath} from '../math.js';
 test('recovered and added question banks have valid unique ids and answers',()=>{
- const ids=new Set();assert.equal(Object.keys(SUBJECTS).length,16);assert.ok(BANK.length>100);
+ const ids=new Set();assert.equal(Object.keys(SUBJECTS).length,17);assert.ok(BANK.length>100);
  for(const q of BANK){assert.ok(SUBJECTS[q.s],q.s);assert.ok(q.e&&q.q&&q.t);assert.ok(!ids.has(q.id));ids.add(q.id);
  const right=q.kind==='text'?q.source.answers[0]:q.kind==='match'?q.source.pairs.map(p=>p[1]):q.c;
  assert.ok(answerCorrect(q,right),q.id);assert.ok(answerText(q));if(!q.kind||q.kind==='choice'){assert.ok(q.c>=0&&q.c<q.a.length);assert.equal(new Set(q.a).size,q.a.length);}

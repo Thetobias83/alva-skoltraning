@@ -1,6 +1,12 @@
-import {CURRICULUM_GUIDE,curriculumUrl} from './curriculum-guide.js?v=20261101-curriculum1';
+import {CURRICULUM_GUIDE,curriculumUrl} from './curriculum-guide.js?v=20261102-study1';
 const resource=(subject,provider,title,url,description,language='Svenska')=>({subject,provider,title,url,description,language});
 export const REFERENCES=[
+ resource('Studieteknik','UR Play','Anteckna smart · video, 1 min','https://urplay.se/program/215469-orka-plugga-anteckna-smart','En kort film för högstadiet. Prova ett anteckningstips direkt efteråt. Svensk textning anges hos UR.'),
+ resource('Studieteknik','UR Play','Plugga effektivt · video, 4 min','https://urplay.se/program/219574-orka-plugga-plugga-effektivt','Tips om hur ett pluggpass kan läggas upp. Välj en sak att prova.'),
+ resource('Studieteknik','UR Play','Förbättra minnet med loci-metoden · video, 3 min','https://urplay.se/program/217196-orka-plugga-forbattra-minnet-med-loci-metoden','Se hur bekanta platser kan bli ledtrådar till sådant du vill minnas.'),
+ resource('Studieteknik','UR Play','Orka plugga – Lässtrategier · filmer','https://urplay.se/serie/201900-orka-plugga-lasstrategier','Korta filmer om läsning. Välj ett avsnitt och berätta ett tips efteråt. UR kan kräva inloggning för vissa program.'),
+ resource('Studieteknik','Örebro universitet','Anteckna för att minnas och lära','https://www.oru.se/utbildning/jag-ar-student/stod-under-studietiden/studieteknik/anteckna-for-att-minnas-och-lara/','Fördjupning och anteckningsmallar. Skrivet för studenter; använd den enkla lektionen här som start.'),
+ resource('Studieteknik','The Learning Scientists','Frågor och svar om hur man lär sig','https://www.learningscientists.org/faq','Forskares förklaringar av bland annat att försöka minnas och repetera vid flera tillfällen. Fördjupning tillsammans med en vuxen.','Engelska · fördjupning'),
  ...Object.keys(CURRICULUM_GUIDE).map(subject=>resource(subject,'Skolverket','Kursplan: centralt innehåll för åk 7–9',curriculumUrl(subject),'Originalkursplanen. Den omfattar hela högstadiet; skolan planerar fördelningen mellan årskurserna.')),
  resource('Biologi','UMO','Kropp, relationer och samtycke','https://www.umo.se/sex/regler-och-lagar-om-sex/sex-och-samtycke2/','Saklig ungdomsanpassad information om frivillighet och gränser.'),
  resource('Biologi','1177','Frågor och svar om antibiotika','https://www.1177.se/Stockholm/undersokning-behandling/behandling-med-lakemedel/om-lakemedel/fragor-och-svar-om-antibiotika/','Skillnaden mellan bakterier och virus och varför antibiotika inte hjälper mot virus.'),

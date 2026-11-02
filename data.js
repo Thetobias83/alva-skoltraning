@@ -1,11 +1,13 @@
-import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261101-curriculum1';
-import {CURRICULUM_MORE} from './curriculum-more.js?v=20261101-curriculum1';
-import {READING_QUESTIONS} from './reading-questions.js?v=20261101-curriculum1';
-import {KNOWLEDGE_QUESTIONS} from './knowledge-questions.js?v=20261101-curriculum1';
-import {ROME_QUESTIONS} from './rome.js?v=20261101-curriculum1';
+import {STUDY_QUESTIONS} from './study-questions.js?v=20261102-study1';
+import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261102-study1';
+import {CURRICULUM_MORE} from './curriculum-more.js?v=20261102-study1';
+import {READING_QUESTIONS} from './reading-questions.js?v=20261102-study1';
+import {KNOWLEDGE_QUESTIONS} from './knowledge-questions.js?v=20261102-study1';
+import {ROME_QUESTIONS} from './rome.js?v=20261102-study1';
 import {subjects as additionalSubjects} from './questions.js';
 import {extraContent} from './extra-content.js';
 const SUBJECTS={
+"Studieteknik":{desc:"Lär dig plugga i små steg: minnas, repetera, anteckna, förstå texter och förbereda prov.",topics:["Komma igång","Minnas aktivt","Repetition","Anteckna","Viktig information","Sammanfatta och förstå","Minnesknep","Inför prov"]},
 "Matematik":{desc:"Tal, algebra, geometri, procent, statistik, sannolikhet, samband och problemlösning.",topics:["Tal","Procent","Algebra","Geometri","Bråk","Sannolikhet","Samband"]},
 "Svenska":{desc:"Läsförståelse, skrivande, grammatik, muntlig framställning och källkritik.",topics:["Grammatik","Läsförståelse","Källkritik","Texttyper","Språkbruk"]},
 "Engelska":{desc:"Reading, listening, vocabulary, grammar, writing and communication.",topics:["Vocabulary","Grammar","Reading","Writing","Communication"]},
@@ -110,4 +112,4 @@ BANK.push(...ROME_QUESTIONS);
 SUBJECTS.Religion.topics.push("Kristendom","Islam","Judendom","Buddhism","Hinduism");
 BANK.push(...KNOWLEDGE_QUESTIONS);
 
-BANK.push(...READING_QUESTIONS);
+BANK.push(...READING_QUESTIONS,...STUDY_QUESTIONS);

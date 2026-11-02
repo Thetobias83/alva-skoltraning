@@ -72,3 +72,11 @@ Webbplatsen kan även publiceras på annan statisk webbhosting genom att använd
 De nya avsnitten innehåller förklarande stycken, exempel, vanliga missförstånd, begrepp, återberättelse och en undersökande uppgift. Nya områden omfattar bland annat statistik, funktioner, litteratur, språkvariation, universum, strålning, bioteknik, världskrig, minoriteter, digitala system, konsumenträtt, bildprocesser och musikaliskt samspel. Detta är en fortsatt utbyggnad, inte ett påstående om fullständig läroplanstäckning. Praktiska färdigheter och muntliga resonemang behöver undervisning och kan inte bedömas genom quiz.
 
 28 automatiska tester kontrollerar bland annat ämneskopplingar, källor, fokuserade frågor och att simning uttryckligen hänvisar till praktisk undervisning. Läroplanssammanfattningarna och lästexterna är självständigt skrivna; Skolverket har inte granskat webbplatsen.
+
+## Studieteknik, 2 november 2026
+
+Ett sjuttonde, kompletterande ämne med åtta lättlästa lektioner: komma igång, aktiv återkallning, utspridd repetition, anteckningar, viktig information i text, egna förklaringar, minnesknep och provplanering. Varje avsnitt har fyra konkreta steg, exempel, återberättelse och video hos UR. Studieteknik har ingen påhittad egen nationell ämneskursplan.
+
+Textverkstaden låter eleven välja relevanta meningar i en egen övningstext om romerska vägar. Återkopplingen förklarar varje val i relation till frågan. Anteckningsverkstaden ger en enkel fråge-/stödords-/sammanfattningsmall. Skrivytorna sparas inte eller skickas och återställs vid byte av avsnitt. Ingen automatisk bedömning av elevens fria text görs. Videor öppnas hos UR utan inbäddad spelare eller automatisk uppspelning. UR kan kräva inloggning; lästexter och verkstäder fungerar utan filmen.
+
+Totalt 152 lektioner och 338 fasta frågor. Studieteknik har 24 situationsfrågor på tre nivåer. 30 automatiska tester, inklusive ämneskoppling, nivåer, videolänkar och textverkstadens relevansåterkoppling.

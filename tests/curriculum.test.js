@@ -7,7 +7,7 @@ import {REFERENCES} from '../references.js';
 
 test('all sixteen subjects have curriculum introductions, official sources and practical tasks',()=>{
  assert.equal(Object.keys(CURRICULUM_GUIDE).length,16);
- for(const subject of Object.keys(SUBJECTS)){
+ for(const subject of Object.keys(CURRICULUM_GUIDE)){
   assert.ok(CURRICULUM_GUIDE[subject],subject);
   const chapters=LESSONS.filter(l=>l.subject===subject&&l.id.startsWith('curriculum-'));
   assert.ok(chapters.length,subject);
