@@ -1,6 +1,13 @@
-import {CURRICULUM_GUIDE,curriculumUrl} from './curriculum-guide.js?v=20261102-study2';
+import {CURRICULUM_GUIDE,curriculumUrl} from './curriculum-guide.js?v=20261102-office1';
 const resource=(subject,provider,title,url,description,language='Svenska')=>({subject,provider,title,url,description,language});
 export const REFERENCES=[
+ ...['Word','Excel','PowerPoint'].map(subject=>resource(subject,'Microsoft Support',`Hjälp och utbildning för ${subject}`,`https://support.microsoft.com/sv-se/${subject.toLowerCase()}/`,'Välj ämne och din programversion. Menyer och funktioner varierar mellan webb, Windows och Mac.')),
+ resource('Word','Microsoft Support','Rubriker och formatmallar – guide med video','https://support.microsoft.com/sv-se/word/add-a-heading-in-a-word-document','Förstå rubriknivåer och varför formatmallar hjälper vid längre rapporter.'),
+ resource('Excel','Microsoft Support','SUMMA – summera ett område','https://support.microsoft.com/sv-se/excel/functions/sum-function','Funktionsbeskrivning och exempel att jämföra med övningen.'),
+ resource('Excel','Microsoft Support','Relativa och absoluta referenser','https://support.microsoft.com/sv-se/excel/switch-between-relative-and-absolute-references','Lär dig vad som händer när formler kopieras.'),
+ resource('Excel','Microsoft Support','XLETAUPP','https://support.microsoft.com/sv-se/excel/functions/xlookup-function','Fördjupning. Funktionen finns inte i Excel 2016 eller 2019.'),
+ resource('Excel','Microsoft Support','Tillgängliga diagram – video och text','https://support.microsoft.com/sv-se/excel/accessibility/video-create-more-accessible-charts-in-excel','Visa vad diagrammet mäter med tydliga rubriker och alternativtext.'),
+ resource('PowerPoint','Microsoft Support','Ordna figurer, bilder och objekt – video och text','https://support.microsoft.com/sv-se/office/video-stapla-figurer-bilder-och-objekt-fccf3cb2-cb5c-494f-b8bb-c2b85e1ba123','Se hur objekt kan placeras framför eller bakom varandra.'),
  resource('Studieteknik','UR Play','Anteckna smart · video, 1 min','https://urplay.se/program/215469-orka-plugga-anteckna-smart','En kort film för högstadiet. Prova ett anteckningstips direkt efteråt. Svensk textning anges hos UR.'),
  resource('Studieteknik','UR Play','Plugga effektivt · video, 4 min','https://urplay.se/program/219574-orka-plugga-plugga-effektivt','Tips om hur ett pluggpass kan läggas upp. Välj en sak att prova.'),
  resource('Studieteknik','UR Play','Förbättra minnet med loci-metoden · video, 3 min','https://urplay.se/program/217196-orka-plugga-forbattra-minnet-med-loci-metoden','Se hur bekanta platser kan bli ledtrådar till sådant du vill minnas.'),

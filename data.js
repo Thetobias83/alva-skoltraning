@@ -1,9 +1,9 @@
-import {STUDY_QUESTIONS} from './study-questions.js?v=20261102-study2';
-import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261102-study2';
-import {CURRICULUM_MORE} from './curriculum-more.js?v=20261102-study2';
-import {READING_QUESTIONS} from './reading-questions.js?v=20261102-study2';
-import {KNOWLEDGE_QUESTIONS} from './knowledge-questions.js?v=20261102-study2';
-import {ROME_QUESTIONS} from './rome.js?v=20261102-study2';
+import {STUDY_QUESTIONS} from './study-questions.js?v=20261102-office1';
+import {CURRICULUM_LESSONS} from './curriculum-lessons.js?v=20261102-office1';
+import {CURRICULUM_MORE} from './curriculum-more.js?v=20261102-office1';
+import {READING_QUESTIONS} from './reading-questions.js?v=20261102-office1';
+import {KNOWLEDGE_QUESTIONS} from './knowledge-questions.js?v=20261102-office1';
+import {ROME_QUESTIONS} from './rome.js?v=20261102-office1';
 import {subjects as additionalSubjects} from './questions.js';
 import {extraContent} from './extra-content.js';
 const SUBJECTS={

@@ -80,3 +80,13 @@ Ett sjuttonde, kompletterande ämne med åtta lättlästa lektioner: komma igån
 Textverkstaden låter eleven välja relevanta meningar i en egen övningstext om romerska vägar. Återkopplingen förklarar varje val i relation till frågan. Anteckningsverkstaden ger en enkel fråge-/stödords-/sammanfattningsmall. Skrivytorna sparas inte eller skickas och återställs vid byte av avsnitt. Ingen automatisk bedömning av elevens fria text görs. Videor öppnas hos UR utan inbäddad spelare eller automatisk uppspelning. UR kan kräva inloggning; lästexter och verkstäder fungerar utan filmen.
 
 Totalt 152 lektioner och 338 fasta frågor. Studieteknik har 24 situationsfrågor på tre nivåer. 30 automatiska tester, inklusive ämneskoppling, nivåer, videolänkar och textverkstadens relevansåterkoppling.
+
+## Office, 2 november 2026
+
+En egen Office-knapp öppnar tre kurser i Word, Excel och PowerPoint. Varje kurs har nio steg fördelade på Grund, Fortsättning och Fördjupning. De 27 stegen innehåller fyra praktiska instruktioner, exempel, uppgift, två kontrollpunkter och en kunskapsfråga. Befintliga kurser i C++, 3D-printning och AI behålls; totalt sex kurser. Kurskryss använder samma lokala lagring och export/import som tidigare.
+
+Word går från skrivande och sparande till rubrikformat, granskning, källor och rapport. Excel går från celler till formler, tabeller, diagram, absoluta referenser, OM, XLETAUPP och pivottabeller. PowerPoint går från enkla bilder till talarstöd, data, gemensamma layouter, tillgänglighet och slutprojekt. Fördjupningarna är fortsatta övningar, inte en fullständig expertcertifiering.
+
+Excel-övningsdata skapas lokalt som UTF-8-CSV med BOM och semikolon. Sex påhittade inköpsrader ger 195 kr totalt, Frukt 73 kr och Skolmaterial 122 kr. CSV innehåller inga formler, makron eller personuppgifter. Eleven bygger formlerna själv och sparar arbetsfilen som .xlsx. Nedladdningsdialogen kunde inte verifieras eftersom webbläsarverktygets väntan hängde sig; filinnehåll och kontrollvärden är automatiskt testade. Alla 27 steg och sex kursval kontrollerades i webbläsaren.
+
+Office-programmen körs inte här. Praktiken görs i en Office-version eleven har tillgång till; menyer och funktioner varierar. XLETAUPP är markerad som otillgänglig i Excel 2016/2019. Microsofts egna guider och filmartiklar länkas som fördjupning. 33 automatiska tester godkända.

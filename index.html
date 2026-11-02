@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#245647">
 <meta name="description" content="Interaktiv skolträning för årskurs 7 med adaptiv repetition, glosor och provläge.">
 <title>Alvas skolträning · Smart webb</title>
-<link rel="stylesheet" href="./style.css?v=20261102-study2">
+<link rel="stylesheet" href="./style.css?v=20261102-office1">
 </head>
 <body>
 <div class="wrap">
@@ -39,6 +39,7 @@
   <button class="tab" data-view="progress">Översikt</button>
   <button class="tab" data-view="ai">AI-hjälp</button>
   <button class="tab" data-view="courses">Kurser</button>
+  <button class="tab" id="officeCoursesBtn">Office</button>
   <button class="tab" data-view="resources">Läs vidare</button>
   <button class="tab" data-view="settings">Inställningar</button>
 </nav>
@@ -189,7 +190,8 @@
 </section>
 
 <section id="view-courses" class="view">
- <div class="panel hero"><div><h2>Lär dig något nytt</h2><p>Tre kurser med enkla förklaringar, egna försök och frågor med återkoppling. Gå i din egen takt och återkom till vilket steg du vill.</p></div></div>
+ <div class="panel hero"><div><h2>Lär dig något nytt</h2><p>Office från grund till fördjupning i Word, Excel och PowerPoint, samt kurser i C++, 3D-printning och AI. Enkla förklaringar, egna försök och frågor med återkoppling. Gå i din egen takt och återkom till vilket steg du vill.</p></div></div>
+ <div class="panel card"><label for="courseCategory">Välj kursdel</label><select id="courseCategory"><option value="all">Alla kurser</option><option value="office">Office – grund, fortsättning och fördjupning</option></select><p class="small">Officekurserna har nio steg var på tre nivåer. Öva i en Office-version du har tillgång till; skolan kan hjälpa dig hitta rätt program. Inget abonnemang behövs för att läsa materialet här.</p></div>
  <div id="courseCards" class="grid2"></div>
  <div id="courseSteps" class="controls course-steps" aria-label="Kursens steg"></div>
  <div id="courseLesson"></div>
@@ -228,6 +230,6 @@
 <footer>Innehållet är byggt som kompletterande träning för årskurs 7. Exakta läroböcker/kapitel behöver läggas in när skolans aktuella material är känt.</footer>
 </div>
 
-<script type="module" src="./app.js?v=20261102-study2"></script>
+<script type="module" src="./app.js?v=20261102-office1"></script>
 </body>
 </html>
